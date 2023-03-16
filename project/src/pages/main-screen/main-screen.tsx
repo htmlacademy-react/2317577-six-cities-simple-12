@@ -1,12 +1,17 @@
-import PlaceCard from '../../components/place-card/PlaceCard';
+import {Offers} from '../../types/offers';
+import {Reviews} from '../../types/reviews';
+import PlacesList from '../../components/places-list/PlacesList';
+import Logo from '../../components/logo/Logo';
 
 type MainScreenProps = {
   placesCount: number;
-}
+  offers: Offers;
+  reviews: Reviews;
+};
 
-function MainScreen({placesCount}: MainScreenProps): JSX.Element {
+function MainScreen({placesCount, offers, reviews}: MainScreenProps): JSX.Element {
   return (
-    <body className="page page--gray page--main">
+    <div className="page page--gray page--main">
       <div style={{ display: 'none' }}>
         <svg xmlns="http://www.w3.org/2000/svg">
           <symbol id="icon-arrow-select" viewBox="0 0 7 4">
@@ -35,15 +40,7 @@ function MainScreen({placesCount}: MainScreenProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -135,13 +132,7 @@ function MainScreen({placesCount}: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-              </div>
+              {<PlacesList offers={offers} reviews={reviews} />}
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
@@ -149,7 +140,7 @@ function MainScreen({placesCount}: MainScreenProps): JSX.Element {
           </div>
         </div>
       </main>
-    </body>
+    </div>
   );
 }
 

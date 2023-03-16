@@ -992,15 +992,12 @@ img {
   font-size: 18px;
   line-height: 1.223;
   font-weight: 700;
-  font-style: oblique
+  font-style: oblique;
+  cursor: pointer;
 }
 
-.place-card__name a {
-  display: inline-block
-}
-
-.place-card__name a:focus,
-.place-card__name a:hover {
+.place-card__name:focus,
+.place-card__name:hover {
   opacity: .7
 }
 
