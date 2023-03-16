@@ -1,17 +1,15 @@
-import { Reviews } from "../types/reviews";
+import { Reviews } from '../types/reviews';
 
 export const countCommonRating = (
   reviews: Reviews,
   setPlaceRating: React.Dispatch<React.SetStateAction<[number, string]>>
 ) => {
   if (reviews.length) {
-    let ratings = reviews.map((review) => {
-      return review.rating;
-    });
+    const ratings = reviews.map((review) => review.rating);
 
-    let commonRating =
+    const commonRating =
       ratings.reduce((acc, num) => acc + num, 0) / ratings.length;
 
-    setPlaceRating([commonRating, commonRating * 20 + "%"]);
+    setPlaceRating([commonRating, `${commonRating * 20}%`]);
   }
 };

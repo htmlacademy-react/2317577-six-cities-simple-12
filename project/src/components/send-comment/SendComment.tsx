@@ -1,9 +1,9 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 function SendComment() {
   const [formData, setFormData] = useState({
-    rating: "",
-    review: "",
+    rating: '',
+    review: '',
     date: new Date(),
   });
 
@@ -40,8 +40,8 @@ function SendComment() {
   const clearFormData = () => {
     setFormData({
       ...formData,
-      rating: "",
-      review: "",
+      rating: '',
+      review: '',
     });
     setRadioButtonsChecked([false, false, false, false, false]);
   };
@@ -52,7 +52,7 @@ function SendComment() {
   };
 
   useEffect(() => {
-    if (formData.rating !== "" && formData.review.length >= 50) {
+    if (formData.rating !== '' && formData.review.length >= 50) {
       setSubmitButtonDisabled(false);
     } else {
       setSubmitButtonDisabled(true);
@@ -172,10 +172,11 @@ function SendComment() {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
         onChange={handleTextAreaInput}
-      ></textarea>
+      >
+      </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set{" "}
+          To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
           with at least <b className="reviews__text-amount">50 characters</b>.
         </p>

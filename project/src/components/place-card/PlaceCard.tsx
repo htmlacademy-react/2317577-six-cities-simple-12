@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { Offer } from "../../types/offers";
-import { Reviews } from "../../types/reviews";
-import { countCommonRating } from "../../utils/utils";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { Offer } from '../../types/offers';
+import { Reviews } from '../../types/reviews';
+import { countCommonRating } from '../../utils/utils';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -10,13 +10,11 @@ type PlaceCardProps = {
 };
 
 function PlaceCard({offer, reviews}: PlaceCardProps) {
-  const [activeCard, setActiveCard] = useState<number | null>(null);
-  const [placeRating, setPlaceRating] = useState<[number, string]>([0, "0%"]);
+  const [/*activeCard*/, setActiveCard] = useState<number | null>(null);
+  const [placeRating, setPlaceRating] = useState<[number, string]>([0, '0%']);
 
   useEffect(() => {
-    let currentReviews = reviews.filter((review) => {
-      return review.id === offer.id;
-    });
+    const currentReviews = reviews.filter((review) => review.id === offer.id);
     countCommonRating(currentReviews, setPlaceRating);
   }, []);
 

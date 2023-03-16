@@ -1,15 +1,15 @@
-import { Reviews } from "../../types/reviews";
-import Review from "../review/Review";
+import { Reviews } from '../../types/reviews';
+import Review from '../review/Review';
 
-type ReviewsList = {
+type ReviewsListProps = {
   reviews: Reviews;
 };
 
-function ReviewsList({reviews}: ReviewsList) {
+function ReviewsList({reviews}: ReviewsListProps) {
   return (
     <ul className="reviews__list">
       {reviews.map((review, index) => (
-        <Review {...review} key={`${review.name}-${index}`} />
+        <Review {...review} key={review.name} />
       ))}
     </ul>
   );
