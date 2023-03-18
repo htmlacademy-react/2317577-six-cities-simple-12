@@ -2,6 +2,8 @@ import {Offers} from '../../types/offers';
 import {Reviews} from '../../types/reviews';
 import PlacesList from '../../components/places-list/PlacesList';
 import Logo from '../../components/logo/Logo';
+import { NavLink } from 'react-router-dom';
+import { Approute } from '../../constants/const';
 
 type MainScreenProps = {
   placesCount: number;
@@ -53,9 +55,9 @@ function MainScreen({placesCount, offers, reviews}: MainScreenProps): JSX.Elemen
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <div className="header__nav-link">
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </div>
                 </li>
               </ul>
             </nav>
@@ -69,34 +71,34 @@ function MainScreen({placesCount, offers, reviews}: MainScreenProps): JSX.Elemen
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
                   <span>Paris</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
                   <span>Cologne</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
                   <span>Brussels</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
+                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
                   <span>Amsterdam</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
                   <span>Hamburg</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
                   <span>Dusseldorf</span>
-                </a>
+                </NavLink>
               </li>
             </ul>
           </section>

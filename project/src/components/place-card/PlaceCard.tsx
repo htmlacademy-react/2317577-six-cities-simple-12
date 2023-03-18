@@ -13,17 +13,17 @@ function PlaceCard({offer, reviews}: PlaceCardProps) {
   const [/*activeCard*/, setActiveCard] = useState<number | null>(null);
   const [placeRating, setPlaceRating] = useState<[number, string]>([0, '0%']);
 
-  useEffect(() => {
-    const currentReviews = reviews.filter((review) => review.id === offer.id);
-    countCommonRating(currentReviews, setPlaceRating);
-  }, []);
-
   const navigate = useNavigate();
 
   const navigateToRoomPage = () => {
     const path = `offer/${offer.id}`;
     navigate(path);
   };
+
+  useEffect(() => {
+    const currentReviews = reviews.filter((review) => review.id === offer.id);
+    countCommonRating(currentReviews, setPlaceRating);
+  }, [offer.id, reviews]);
 
   return (
     <article
@@ -42,7 +42,6 @@ function PlaceCard({offer, reviews}: PlaceCardProps) {
           src={offer.pic[0]}
           width="260"
           height="200"
-          alt="Place image"
         />
       </div>
       <div className="place-card__info">

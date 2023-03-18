@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import RatingStar from './rating-star/RatingStar';
 
 function SendComment() {
   const [formData, setFormData] = useState({
@@ -8,28 +9,8 @@ function SendComment() {
   });
 
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
-  const [radioButtonsChecked, setRadioButtonsChecked] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
 
-  const handleRadioInput = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setRadioButtonsChecked([
-      ...radioButtonsChecked.slice(0, Number(value) - 1),
-      evt.target.checked,
-      ...radioButtonsChecked.slice(Number(value)),
-    ]);
-  };
-
-  const handleTextAreaInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInput = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
     setFormData({
       ...formData,
@@ -43,7 +24,6 @@ function SendComment() {
       rating: '',
       review: '',
     });
-    setRadioButtonsChecked([false, false, false, false, false]);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -70,100 +50,9 @@ function SendComment() {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-          checked={radioButtonsChecked[4]}
-          onChange={handleRadioInput}
-        />
-        <label
-          htmlFor="5-stars"
-          className="reviews__rating-label form__rating-label"
-          title="perfect"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-          checked={radioButtonsChecked[3]}
-          onChange={handleRadioInput}
-        />
-        <label
-          htmlFor="4-stars"
-          className="reviews__rating-label form__rating-label"
-          title="good"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-          checked={radioButtonsChecked[2]}
-          onChange={handleRadioInput}
-        />
-        <label
-          htmlFor="3-stars"
-          className="reviews__rating-label form__rating-label"
-          title="not bad"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-          checked={radioButtonsChecked[1]}
-          onChange={handleRadioInput}
-        />
-        <label
-          htmlFor="2-stars"
-          className="reviews__rating-label form__rating-label"
-          title="badly"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-          checked={radioButtonsChecked[0]}
-          onChange={handleRadioInput}
-        />
-        <label
-          htmlFor="1-star"
-          className="reviews__rating-label form__rating-label"
-          title="terribly"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {[5, 4, 3, 2, 1].map((star) => (
+          <RatingStar value={star} onChange={handleInput} key={star} />
+        ))}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
@@ -171,7 +60,7 @@ function SendComment() {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
-        onChange={handleTextAreaInput}
+        onChange={handleInput}
       >
       </textarea>
       <div className="reviews__button-wrapper">
