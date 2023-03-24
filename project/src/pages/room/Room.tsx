@@ -3,6 +3,8 @@ import { useParams } from 'react-router';
 import { Offer, Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import { countCommonRating } from '../../utils/utils';
+import { Approute } from '../../constants/const';
+import { Link } from 'react-router-dom';
 import SendComment from '../../components/send-comment/SendComment';
 import ReviewsList from '../../components/reviews-list/Reviews-list';
 import Logo from '../../components/logo/Logo';
@@ -73,9 +75,9 @@ function Room({ offers, reviews }: RoomProps) {
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to={Approute.Main}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -193,7 +195,7 @@ function Room({ offers, reviews }: RoomProps) {
               <div className="near-places__list places__list">
                 <article className="near-places__card place-card">
                   <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href="#">
+                    <Link to={Approute.Main}>
                       <img
                         className="place-card__image"
                         src="img/room.jpg"
@@ -201,7 +203,7 @@ function Room({ offers, reviews }: RoomProps) {
                         height="200"
                         alt="Place image"
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -219,7 +221,9 @@ function Room({ offers, reviews }: RoomProps) {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Wood and stone place</a>
+                      <Link to={Approute.Main}>
+                        Wood and stone place
+                      </Link>
                     </h2>
                     <p className="place-card__type">Private room</p>
                   </div>
@@ -227,7 +231,7 @@ function Room({ offers, reviews }: RoomProps) {
 
                 <article className="near-places__card place-card">
                   <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href="#">
+                    <Link to={Approute.Main}>
                       <img
                         className="place-card__image"
                         src="img/apartment-02.jpg"
@@ -235,7 +239,7 @@ function Room({ offers, reviews }: RoomProps) {
                         height="200"
                         alt="Place image"
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -253,7 +257,9 @@ function Room({ offers, reviews }: RoomProps) {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Canal View Prinsengracht</a>
+                      <Link to={Approute.Main}>
+                        Canal View Prinsengracht
+                      </Link>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
@@ -264,7 +270,7 @@ function Room({ offers, reviews }: RoomProps) {
                     <span>Premium</span>
                   </div>
                   <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href="#">
+                    <Link to={Approute.Main}>
                       <img
                         className="place-card__image"
                         src="img/apartment-03.jpg"
@@ -272,7 +278,7 @@ function Room({ offers, reviews }: RoomProps) {
                         height="200"
                         alt="Place image"
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -290,7 +296,7 @@ function Room({ offers, reviews }: RoomProps) {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Nice, cozy, warm big bed apartment</a>
+                      <Link to={Approute.Main}>Nice, cozy, warm big bed apartment</Link>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
