@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { Approute } from '../../constants/const';
 import Logo from '../../components/logo/Logo';
 
 function Login() {
@@ -72,9 +74,9 @@ function Login() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className="locations__item-link" to={Approute.Main}>
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

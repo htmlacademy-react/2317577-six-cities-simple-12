@@ -7,10 +7,10 @@ import { countCommonRating } from '../../utils/utils';
 type PlaceCardProps = {
   offer: Offer;
   reviews: Reviews;
+  onListItemHover: (listItemName: string | undefined) => void;
 };
 
-function PlaceCard({offer, reviews}: PlaceCardProps) {
-  const [/*activeCard*/, setActiveCard] = useState<number | null>(null);
+function PlaceCard({ offer, reviews, onListItemHover }: PlaceCardProps) {
   const [placeRating, setPlaceRating] = useState<[number, string]>([0, '0%']);
 
   const navigate = useNavigate();
@@ -18,6 +18,14 @@ function PlaceCard({offer, reviews}: PlaceCardProps) {
   const navigateToRoomPage = () => {
     const path = `offer/${offer.id}`;
     navigate(path);
+  };
+
+  const onListItemEnter = () => {
+    onListItemHover(offer.name);
+  };
+
+  const onListItemLeave = () => {
+    onListItemHover(undefined);
   };
 
   useEffect(() => {
@@ -28,8 +36,8 @@ function PlaceCard({offer, reviews}: PlaceCardProps) {
   return (
     <article
       className="cities__card place-card"
-      onMouseEnter={() => setActiveCard(offer.id)}
-      onMouseLeave={() => setActiveCard(null)}
+      onMouseEnter={onListItemEnter}
+      onMouseLeave={onListItemLeave}
     >
       {offer.premium && (
         <div className="place-card__mark">
@@ -42,6 +50,7 @@ function PlaceCard({offer, reviews}: PlaceCardProps) {
           src={offer.pic[0]}
           width="260"
           height="200"
+          alt={offer.name}
         />
       </div>
       <div className="place-card__info">

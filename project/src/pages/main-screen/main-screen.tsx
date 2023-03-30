@@ -1,9 +1,12 @@
-import {Offers} from '../../types/offers';
-import {Reviews} from '../../types/reviews';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Offer, Offers } from '../../types/offers';
+import { Reviews } from '../../types/reviews';
+import { Approute } from '../../constants/const';
+import { cities } from '../../mocks/cities';
 import PlacesList from '../../components/places-list/PlacesList';
 import Logo from '../../components/logo/Logo';
-import { NavLink } from 'react-router-dom';
-import { Approute } from '../../constants/const';
+import Map from '../../components/map/Map';
 
 type MainScreenProps = {
   placesCount: number;
@@ -11,7 +14,20 @@ type MainScreenProps = {
   reviews: Reviews;
 };
 
-function MainScreen({placesCount, offers, reviews}: MainScreenProps): JSX.Element {
+function MainScreen({
+  placesCount,
+  offers,
+  reviews,
+}: MainScreenProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
+    undefined
+  );
+
+  const onListItemHover = (listItemName: string | undefined) => {
+    const currentPoint = offers.find((offer) => offer.name === listItemName);
+    setSelectedPoint(currentPoint);
+  };
+
   return (
     <div className="page page--gray page--main">
       <div style={{ display: 'none' }}>
@@ -71,32 +87,50 @@ function MainScreen({placesCount, offers, reviews}: MainScreenProps): JSX.Elemen
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
+                <NavLink
+                  className="locations__item-link tabs__item"
+                  to={Approute.Main}
+                >
                   <span>Paris</span>
                 </NavLink>
               </li>
               <li className="locations__item">
-                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
+                <NavLink
+                  className="locations__item-link tabs__item"
+                  to={Approute.Main}
+                >
                   <span>Cologne</span>
                 </NavLink>
               </li>
               <li className="locations__item">
-                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
+                <NavLink
+                  className="locations__item-link tabs__item"
+                  to={Approute.Main}
+                >
                   <span>Brussels</span>
                 </NavLink>
               </li>
               <li className="locations__item">
-                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
+                <NavLink
+                  className="locations__item-link tabs__item"
+                  to={Approute.Main}
+                >
                   <span>Amsterdam</span>
                 </NavLink>
               </li>
               <li className="locations__item">
-                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
+                <NavLink
+                  className="locations__item-link tabs__item"
+                  to={Approute.Main}
+                >
                   <span>Hamburg</span>
                 </NavLink>
               </li>
               <li className="locations__item">
-                <NavLink className="locations__item-link tabs__item" to={Approute.Main}>
+                <NavLink
+                  className="locations__item-link tabs__item"
+                  to={Approute.Main}
+                >
                   <span>Dusseldorf</span>
                 </NavLink>
               </li>
@@ -134,10 +168,22 @@ function MainScreen({placesCount, offers, reviews}: MainScreenProps): JSX.Elemen
                   </li>
                 </ul>
               </form>
-              {<PlacesList offers={offers} reviews={reviews} />}
+              {
+                <PlacesList
+                  offers={offers}
+                  reviews={reviews}
+                  onListItemHover={onListItemHover}
+                />
+              }
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  city={cities[0]}
+                  offers={offers}
+                  selectedPoint={selectedPoint}
+                />
+              </section>
             </div>
           </div>
         </div>
