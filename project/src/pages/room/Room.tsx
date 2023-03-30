@@ -29,7 +29,7 @@ function Room({ offers, reviews }: RoomProps) {
     setPlaceReviews(currentReviews);
 
     countCommonRating(currentReviews, setPlaceRating);
-  }, []);
+  }, [id, offers, reviews]);
 
   return (
     <div className="page">
@@ -94,7 +94,7 @@ function Room({ offers, reviews }: RoomProps) {
                     <img
                       className="property__image"
                       src={pic}
-                      alt="Photo studio"
+                      alt={place.name}
                     />
                   </div>
                 ))}
@@ -201,7 +201,7 @@ function Room({ offers, reviews }: RoomProps) {
                         src="img/room.jpg"
                         width="260"
                         height="200"
-                        alt="Place image"
+                        alt="Wood and stone place"
                       />
                     </Link>
                   </div>
@@ -237,7 +237,7 @@ function Room({ offers, reviews }: RoomProps) {
                         src="img/apartment-02.jpg"
                         width="260"
                         height="200"
-                        alt="Place image"
+                        alt="Canal View Prinsengracht"
                       />
                     </Link>
                   </div>
@@ -276,7 +276,7 @@ function Room({ offers, reviews }: RoomProps) {
                         src="img/apartment-03.jpg"
                         width="260"
                         height="200"
-                        alt="Place image"
+                        alt="Nice, cozy, warm big bed apartment"
                       />
                     </Link>
                   </div>

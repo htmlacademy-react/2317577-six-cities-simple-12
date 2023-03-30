@@ -47,7 +47,7 @@ function Map({ city, offers, selectedPoint }: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, selectedPoint]);
+  }, [map, offers, selectedPoint, currentCustomIcon, defaultCustomIcon]);
 
   return <div style={{ height: '100%', width: '100%' }} ref={mapRef}></div>;
 }

@@ -50,7 +50,7 @@ function PlaceCard({ offer, reviews, onListItemHover }: PlaceCardProps) {
           src={offer.pic[0]}
           width="260"
           height="200"
-          alt='Place image'
+          alt={offer.name}
         />
       </div>
       <div className="place-card__info">
