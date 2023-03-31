@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import SendComment from '../../components/send-comment/SendComment';
 import ReviewsList from '../../components/reviews-list/Reviews-list';
 import Logo from '../../components/logo/Logo';
+import { cities } from '../../mocks/cities';
+import Map from '../../components/map/Map';
+import OtherPlacesList from '../../components/other-places-list/OtherPlacesList';
 
 type RoomProps = {
   offers: Offers;
@@ -20,6 +23,14 @@ function Room({ offers, reviews }: RoomProps) {
   const [place, setPlace] = useState<Offer>();
   const [placeReviews, setPlaceReviews] = useState<Reviews>([]);
   const [placeRating, setPlaceRating] = useState<[number, string]>([0, '0%']);
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
+    undefined
+  );
+
+  const onListItemHover = (listItemName: string | undefined) => {
+    const currentPoint = offers.find((offer) => offer.name === listItemName);
+    setSelectedPoint(currentPoint);
+  };
 
   useEffect(() => {
     const currentPlace = offers.filter((offer) => offer.id === Number(id))[0];
@@ -166,7 +177,7 @@ function Room({ offers, reviews }: RoomProps) {
                     )}
                   </div>
                   <div className="property__description">
-                    {place.description.map((paragraph, index) => (
+                    {place.description.map((paragraph) => (
                       <p className="property__text" key={paragraph.slice(0, 10)}>
                         {paragraph}
                       </p>
@@ -185,123 +196,24 @@ function Room({ offers, reviews }: RoomProps) {
                 </section>
               </div>
             </div>
-            <section className="property__map map"></section>
+            <section className="property__map map">
+              <Map
+                city={cities[0]}
+                offers={offers.filter((offer) => offer.name !== place.name)}
+                selectedPoint={selectedPoint}
+              />
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <div className="near-places__list places__list">
-                <article className="near-places__card place-card">
-                  <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <Link to={Approute.Main}>
-                      <img
-                        className="place-card__image"
-                        src="img/room.jpg"
-                        width="260"
-                        height="200"
-                        alt="Wood and stone place"
-                      />
-                    </Link>
-                  </div>
-                  <div className="place-card__info">
-                    <div className="place-card__price-wrapper">
-                      <div className="place-card__price">
-                        <b className="place-card__price-value">&euro;80</b>
-                        <span className="place-card__price-text">
-                          &#47;&nbsp;night
-                        </span>
-                      </div>
-                    </div>
-                    <div className="place-card__rating rating">
-                      <div className="place-card__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <h2 className="place-card__name">
-                      <Link to={Approute.Main}>
-                        Wood and stone place
-                      </Link>
-                    </h2>
-                    <p className="place-card__type">Private room</p>
-                  </div>
-                </article>
-
-                <article className="near-places__card place-card">
-                  <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <Link to={Approute.Main}>
-                      <img
-                        className="place-card__image"
-                        src="img/apartment-02.jpg"
-                        width="260"
-                        height="200"
-                        alt="Canal View Prinsengracht"
-                      />
-                    </Link>
-                  </div>
-                  <div className="place-card__info">
-                    <div className="place-card__price-wrapper">
-                      <div className="place-card__price">
-                        <b className="place-card__price-value">&euro;132</b>
-                        <span className="place-card__price-text">
-                          &#47;&nbsp;night
-                        </span>
-                      </div>
-                    </div>
-                    <div className="place-card__rating rating">
-                      <div className="place-card__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <h2 className="place-card__name">
-                      <Link to={Approute.Main}>
-                        Canal View Prinsengracht
-                      </Link>
-                    </h2>
-                    <p className="place-card__type">Apartment</p>
-                  </div>
-                </article>
-
-                <article className="near-places__card place-card">
-                  <div className="place-card__mark">
-                    <span>Premium</span>
-                  </div>
-                  <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <Link to={Approute.Main}>
-                      <img
-                        className="place-card__image"
-                        src="img/apartment-03.jpg"
-                        width="260"
-                        height="200"
-                        alt="Nice, cozy, warm big bed apartment"
-                      />
-                    </Link>
-                  </div>
-                  <div className="place-card__info">
-                    <div className="place-card__price-wrapper">
-                      <div className="place-card__price">
-                        <b className="place-card__price-value">&euro;180</b>
-                        <span className="place-card__price-text">
-                          &#47;&nbsp;night
-                        </span>
-                      </div>
-                    </div>
-                    <div className="place-card__rating rating">
-                      <div className="place-card__stars rating__stars">
-                        <span style={{ width: '100%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <h2 className="place-card__name">
-                      <Link to={Approute.Main}>Nice, cozy, warm big bed apartment</Link>
-                    </h2>
-                    <p className="place-card__type">Apartment</p>
-                  </div>
-                </article>
-              </div>
+              <OtherPlacesList
+                offers={offers.filter((offer) => offer.name !== place.name)}
+                reviews={reviews}
+                onListItemHover={onListItemHover}
+              />
             </section>
           </div>
         </main>
