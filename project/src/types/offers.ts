@@ -1,5 +1,6 @@
 export type Offer = {
   name: string;
+  city: string;
   type: string;
   pic: string[];
   price: number;

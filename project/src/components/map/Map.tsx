@@ -47,7 +47,13 @@ function Map({ city, offers, selectedPoint }: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, selectedPoint, currentCustomIcon, defaultCustomIcon]);
+  }, [map, offers, selectedPoint, currentCustomIcon, defaultCustomIcon, city]);
+
+  useEffect(() => {
+    if (map) {
+      map.setView([city.lat, city.lng]);
+    }
+  }, [city, map]);
 
   return <div style={{ height: '100%', width: '100%' }} ref={mapRef}></div>;
 }

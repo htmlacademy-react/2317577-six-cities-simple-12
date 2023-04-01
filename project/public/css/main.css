@@ -789,7 +789,8 @@ img {
 .locations__item {
   display: block;
   margin-right: 36px;
-  margin-bottom: 19px
+  margin-bottom: 19px;
+  cursor: pointer;
 }
 
 .favorites__locations .locations__item-link {
