@@ -1,32 +1,42 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Offer, Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
-import { Approute } from '../../constants/const';
-import { cities } from '../../mocks/cities';
+import { useAppSelector } from '../../hooks/redux';
+import { Cities, City } from '../../types/cities';
 import PlacesList from '../../components/places-list/PlacesList';
 import Logo from '../../components/logo/Logo';
 import Map from '../../components/map/Map';
+import CitiesList from '../../components/cities-list/CitiesList';
 
 type MainScreenProps = {
   placesCount: number;
-  offers: Offers;
   reviews: Reviews;
+  cities: Cities;
 };
 
 function MainScreen({
   placesCount,
-  offers,
+  cities,
   reviews,
 }: MainScreenProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
+  const [currentOffers, setCurrentOffers] = useState<Offers>([]);
+  const [currentCity, setCurrentCity] = useState<City | null>(null);
+
+  const offers = useAppSelector((state) => state.offers);
+  const city = useAppSelector((state) => state.currentCity);
 
   const onListItemHover = (listItemName: string | undefined) => {
     const currentPoint = offers.find((offer) => offer.name === listItemName);
     setSelectedPoint(currentPoint);
   };
+
+  useEffect(() => {
+    setCurrentOffers(offers.filter((offer) => offer.city === city.title));
+    setCurrentCity(city);
+  }, [offers, city]);
 
   return (
     <div className="page page--gray page--main">
@@ -85,63 +95,20 @@ function MainScreen({
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <NavLink
-                  className="locations__item-link tabs__item"
-                  to={Approute.Main}
-                >
-                  <span>Paris</span>
-                </NavLink>
-              </li>
-              <li className="locations__item">
-                <NavLink
-                  className="locations__item-link tabs__item"
-                  to={Approute.Main}
-                >
-                  <span>Cologne</span>
-                </NavLink>
-              </li>
-              <li className="locations__item">
-                <NavLink
-                  className="locations__item-link tabs__item"
-                  to={Approute.Main}
-                >
-                  <span>Brussels</span>
-                </NavLink>
-              </li>
-              <li className="locations__item">
-                <NavLink
-                  className="locations__item-link tabs__item"
-                  to={Approute.Main}
-                >
-                  <span>Amsterdam</span>
-                </NavLink>
-              </li>
-              <li className="locations__item">
-                <NavLink
-                  className="locations__item-link tabs__item"
-                  to={Approute.Main}
-                >
-                  <span>Hamburg</span>
-                </NavLink>
-              </li>
-              <li className="locations__item">
-                <NavLink
-                  className="locations__item-link tabs__item"
-                  to={Approute.Main}
-                >
-                  <span>Dusseldorf</span>
-                </NavLink>
-              </li>
-            </ul>
+            <CitiesList cities={cities} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              {currentCity && (
+                <b className="places__found">
+                  {`${currentOffers.length} ${
+                    currentOffers.length === 1 ? 'place' : 'places'
+                  } to stay in ${currentCity.title}`}
+                </b>
+              )}
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -170,7 +137,7 @@ function MainScreen({
               </form>
               {
                 <PlacesList
-                  offers={offers}
+                  offers={currentOffers}
                   reviews={reviews}
                   onListItemHover={onListItemHover}
                 />
@@ -178,11 +145,13 @@ function MainScreen({
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map
-                  city={cities[0]}
-                  offers={offers}
-                  selectedPoint={selectedPoint}
-                />
+                {currentCity && (
+                  <Map
+                    city={currentCity}
+                    offers={currentOffers}
+                    selectedPoint={selectedPoint}
+                  />
+                )}
               </section>
             </div>
           </div>

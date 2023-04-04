@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useAppSelector } from '../../hooks/redux';
 import { useParams } from 'react-router';
-import { Offer, Offers } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import { countCommonRating } from '../../utils/utils';
 import { Approute } from '../../constants/const';
@@ -8,16 +9,14 @@ import { Link } from 'react-router-dom';
 import SendComment from '../../components/send-comment/SendComment';
 import ReviewsList from '../../components/reviews-list/Reviews-list';
 import Logo from '../../components/logo/Logo';
-import { cities } from '../../mocks/cities';
 import Map from '../../components/map/Map';
 import OtherPlacesList from '../../components/other-places-list/OtherPlacesList';
 
 type RoomProps = {
-  offers: Offers;
   reviews: Reviews;
 };
 
-function Room({ offers, reviews }: RoomProps) {
+function Room({ reviews }: RoomProps) {
   const { id } = useParams();
 
   const [place, setPlace] = useState<Offer>();
@@ -26,6 +25,9 @@ function Room({ offers, reviews }: RoomProps) {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
+
+  const offers = useAppSelector((state) => state.offers);
+  const city = useAppSelector((state) => state.currentCity);
 
   const onListItemHover = (listItemName: string | undefined) => {
     const currentPoint = offers.find((offer) => offer.name === listItemName);
@@ -198,7 +200,7 @@ function Room({ offers, reviews }: RoomProps) {
             </div>
             <section className="property__map map">
               <Map
-                city={cities[0]}
+                city={city}
                 offers={offers.filter((offer) => offer.name !== place.name)}
                 selectedPoint={selectedPoint}
               />
