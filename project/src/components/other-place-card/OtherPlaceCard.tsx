@@ -1,31 +1,21 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Approute } from '../../constants/const';
 import { Offer } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
-import { countCommonRating } from '../../utils/utils';
+import { countCurrrentRating } from '../../utils/utils';
 
 type OtherPlaceCardProps = {
   offer: Offer;
-  reviews: Reviews;
   onListItemHover: (listItemName: string | undefined) => void;
 }
 
-function OtherPlaceCard({offer, reviews, onListItemHover}: OtherPlaceCardProps) {
-  const [placeRating, setPlaceRating] = useState<[number, string]>([0, '0%']);
-
+function OtherPlaceCard({offer, onListItemHover}: OtherPlaceCardProps) {
   const onListItemEnter = () => {
-    onListItemHover(offer.name);
+    onListItemHover(offer.title);
   };
 
   const onListItemLeave = () => {
     onListItemHover(undefined);
   };
-
-  useEffect(() => {
-    const currentReviews = reviews.filter((review) => review.id === offer.id);
-    countCommonRating(currentReviews, setPlaceRating);
-  }, [offer.id, reviews]);
 
   return (
     <article className="near-places__card place-card"
@@ -36,7 +26,7 @@ function OtherPlaceCard({offer, reviews, onListItemHover}: OtherPlaceCardProps) 
         <Link to={Approute.Main}>
           <img
             className="place-card__image"
-            src="img/room.jpg"
+            src={offer.images[0]}
             width="260"
             height="200"
             alt="Wood and stone place"
@@ -54,12 +44,12 @@ function OtherPlaceCard({offer, reviews, onListItemHover}: OtherPlaceCardProps) 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: placeRating[1] }}></span>
+            <span style={{ width: countCurrrentRating(offer.rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.name}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.description}</p>
       </div>

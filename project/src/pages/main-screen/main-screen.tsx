@@ -1,42 +1,34 @@
 import { useEffect, useState } from 'react';
 import { Offer, Offers } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
 import { useAppSelector } from '../../hooks/redux';
-import { Cities, City } from '../../types/cities';
 import PlacesList from '../../components/places-list/PlacesList';
 import Logo from '../../components/logo/Logo';
 import Map from '../../components/map/Map';
 import CitiesList from '../../components/cities-list/CitiesList';
+import { cities } from '../../constants/const';
 
-type MainScreenProps = {
-  placesCount: number;
-  reviews: Reviews;
-  cities: Cities;
-};
-
-function MainScreen({
-  placesCount,
-  cities,
-  reviews,
-}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
   const [currentOffers, setCurrentOffers] = useState<Offers>([]);
-  const [currentCity, setCurrentCity] = useState<City | null>(null);
 
-  const offers = useAppSelector((state) => state.offers);
-  const city = useAppSelector((state) => state.currentCity);
+  const offers: Offers = useAppSelector((state) => state.offers);
+  const city: string = useAppSelector((state) => state.currentCity);
 
-  const onListItemHover = (listItemName: string | undefined) => {
-    const currentPoint = offers.find((offer) => offer.name === listItemName);
-    setSelectedPoint(currentPoint);
+  const onListItemHover = (selectedOfferId: number | undefined) => {
+    const selectedOffer: Offer | undefined = offers.find((offer: Offer) => offer.id === selectedOfferId);
+    setSelectedPoint(selectedOffer);
+  };
+
+  const getCurrentOffers = () => {
+    const cityOffers = offers.filter((offer: Offer) => offer.city.name === city);
+    setCurrentOffers(cityOffers);
   };
 
   useEffect(() => {
-    setCurrentOffers(offers.filter((offer) => offer.city === city.title));
-    setCurrentCity(city);
-  }, [offers, city]);
+    getCurrentOffers();
+  }, [city]);
 
   return (
     <div className="page page--gray page--main">
@@ -102,13 +94,11 @@ function MainScreen({
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              {currentCity && (
-                <b className="places__found">
-                  {`${currentOffers.length} ${
-                    currentOffers.length === 1 ? 'place' : 'places'
-                  } to stay in ${currentCity.title}`}
-                </b>
-              )}
+              <b className="places__found">
+                {`${currentOffers.length} ${
+                  currentOffers.length === 1 ? 'place' : 'places'
+                } to stay in ${city}`}
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -138,16 +128,15 @@ function MainScreen({
               {
                 <PlacesList
                   offers={currentOffers}
-                  reviews={reviews}
                   onListItemHover={onListItemHover}
                 />
               }
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                {currentCity && (
+                {currentOffers.length >= 1 && (
                   <Map
-                    city={currentCity}
+                    city={currentOffers[0].city}
                     offers={currentOffers}
                     selectedPoint={selectedPoint}
                   />
