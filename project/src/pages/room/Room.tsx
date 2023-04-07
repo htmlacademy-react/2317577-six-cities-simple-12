@@ -213,11 +213,10 @@ function Room({ reviews }: RoomProps) {
               {nearbyPlaces.length &&
                 (
                   <OtherPlacesList
-                  offers={nearbyPlaces}
-                  onListItemHover={onListItemHover}
+                    offers={nearbyPlaces}
+                    onListItemHover={onListItemHover}
                   />
-                )
-              }
+                )}
             </section>
           </div>
         </main>
