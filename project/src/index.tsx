@@ -5,7 +5,7 @@ import App from './components/app/app';
 import {reviews} from './mocks/reviews';
 import {store} from './store';
 import {checkAuthAction, fetchOffersAction} from './store/asyncActions';
-import {ToastContainer} from 'react-toastify';
+import ErrorPopup from './components/error-popup/ErrorPopup';
 
 store.dispatch(fetchOffersAction());
 
@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer />
+      <ErrorPopup />
       <App reviews={reviews} />
     </Provider>
   </React.StrictMode>

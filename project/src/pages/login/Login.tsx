@@ -1,8 +1,33 @@
-import { Link } from 'react-router-dom';
-import { Approute } from '../../constants/const';
-import Logo from '../../components/logo/Logo';
+import { Link } from "react-router-dom";
+import { Approute } from "../../constants/const";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { AuthInfo } from "../../types/authInfo";
+import { useAppDispatch } from "../../hooks/redux";
+import { loginAction } from "../../store/asyncActions";
+import Logo from "../../components/logo/Logo";
 
 function Login() {
+  const dispatch = useAppDispatch();
+
+  const [formData, setFormData] = useState<AuthInfo>({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (formData.email || formData.password) {
+      dispatch(
+        loginAction({ email: formData.email, password: formData.password })
+      );
+    }
+  };
+
   return (
     <div className="page page--gray page--login">
       <div style={{ display: 'none'}}>
@@ -43,13 +68,15 @@ function Login() {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
                   className="login__input form__input"
                   type="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Email"
                   required
                 />
@@ -61,6 +88,8 @@ function Login() {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
                   required
                 />
               </div>
