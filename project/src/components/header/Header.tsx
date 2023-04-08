@@ -8,6 +8,10 @@ function Header() {
     (state) => state.authorizationStatus
   );
 
+  const userInfo = useAppSelector(
+    (state) => state.userInfo
+  );
+
   return (
     <header className="header">
       <div className="container">
@@ -17,13 +21,13 @@ function Header() {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {authorizationStatus === AuthorizationStatus.Auth ? (
+              {authorizationStatus === AuthorizationStatus.Auth && userInfo ? (
                 <>
                   <li className="header__nav-item user">
                     <div className="header__nav-profile">
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <img className="header__avatar-wrapper" src={userInfo.avatarUrl} alt={userInfo.name} />
                       <span className="header__user-name user__name">
-                        Oliver.conner@gmail.com
+                        {userInfo.email}
                       </span>
                     </div>
                   </li>

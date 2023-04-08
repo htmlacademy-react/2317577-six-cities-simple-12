@@ -4,10 +4,12 @@ import { AxiosInstance } from 'axios';
 import { Offers } from '../types/offers';
 import {
   loadOffers,
+  redirectToRoute,
   setAuthorizationStatus,
   setOffersLoadingStatus,
+  setUserInfo,
 } from './action';
-import { APIRoute, AuthorizationStatus } from '../constants/const';
+import { APIRoute, Approute, AuthorizationStatus } from '../constants/const';
 import { AuthInfo } from '../types/authInfo';
 import { UserInfo } from '../types/userInfo';
 import { saveToken } from '../services/token';
@@ -35,10 +37,19 @@ export const checkAuthAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->("CHECK_AUTHORIZATION", async (_arg, { dispatch, extra: api }) => {
+>('CHECK_AUTHORIZATION', async (_arg, { dispatch, extra: api }) => {
   try {
-    await api.get(APIRoute.Login);
+    const { data } = await api.get(APIRoute.Login);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(
+      setUserInfo({
+        email: data.email,
+        avatarUrl: data.avatarUrl,
+        id: data.id,
+        isPro: data.isPro,
+        name: data.name,
+      })
+    );
   } catch {
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   }
@@ -58,4 +69,5 @@ export const loginAction = createAsyncThunk<
   } = await api.post<UserInfo>(APIRoute.Login, { email, password });
   saveToken(token);
   dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+  dispatch(redirectToRoute(Approute.Main));
 });
