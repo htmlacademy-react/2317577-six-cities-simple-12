@@ -3,7 +3,6 @@ import { changeCity, loadOffers, setAuthorizationStatus, setOffersLoadingStatus 
 import { Offers } from '../types/offers';
 import { AuthorizationStatus } from '../constants/const';
 
-
 type InitialStateProps = {
   currentCity: string;
   offers: Offers | [];
