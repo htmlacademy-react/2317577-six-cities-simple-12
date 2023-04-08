@@ -1,19 +1,30 @@
+import { City } from './cities';
+
 export type Offer = {
-  name: string;
-  city: string;
-  type: string;
-  pic: string[];
-  price: number;
-  premium: boolean;
   bedrooms: number;
-  adults: number;
-  conveniences: string[];
-  host: string;
-  hostPro: boolean;
-  description: string[];
+  city: City;
+  description: string;
+  goods: string[];
+  host: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
   id: number;
-  lat: number;
-  lng: number;
+  images: string[];
+  isPremium: boolean;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  maxAdults: number;
+  previewImage: string;
+  price: number;
+  rating: number;
+  title: string;
+  type: string;
 };
 
 export type Offers = Offer[];

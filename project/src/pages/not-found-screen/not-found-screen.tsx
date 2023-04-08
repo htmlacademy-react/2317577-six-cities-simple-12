@@ -1,20 +1,13 @@
 import {Link} from 'react-router-dom';
 import {Approute} from '../../constants/const';
+import Logo from '../../components/logo/Logo';
 
 function NotFoundScreen() {
   return (
     <div className="room">
       <div className="not-found__container">
         <div className="not-found__logo-wrapper">
-          <a className="header__logo-link" href="main.html">
-            <img
-              className="header__logo"
-              src="img/logo.svg"
-              alt="6 cities logo"
-              width="81"
-              height="41"
-            />
-          </a>
+          <Logo />
         </div>
         <div className="property__mark">
           <span>404</span>

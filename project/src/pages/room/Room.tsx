@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { useParams } from 'react-router';
-import { Offer } from '../../types/offers';
+import { Offer, Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
-import { countCommonRating } from '../../utils/utils';
+import { countCurrrentRating } from '../../utils/utils';
 import { Approute } from '../../constants/const';
 import { Link } from 'react-router-dom';
 import SendComment from '../../components/send-comment/SendComment';
@@ -21,17 +21,15 @@ function Room({ reviews }: RoomProps) {
 
   const [place, setPlace] = useState<Offer>();
   const [placeReviews, setPlaceReviews] = useState<Reviews>([]);
-  const [placeRating, setPlaceRating] = useState<[number, string]>([0, '0%']);
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
+  const [nearbyPlaces, setNearbyPlaces] = useState<Offers>([]);
 
   const offers = useAppSelector((state) => state.offers);
-  const city = useAppSelector((state) => state.currentCity);
 
   const onListItemHover = (listItemName: string | undefined) => {
-    const currentPoint = offers.find((offer) => offer.name === listItemName);
-    setSelectedPoint(currentPoint);
+    setSelectedPoint(offers.find((offer: Offer) => offer.title === listItemName));
   };
 
   useEffect(() => {
@@ -41,7 +39,8 @@ function Room({ reviews }: RoomProps) {
     const currentReviews = reviews.filter((review) => review.id === Number(id));
     setPlaceReviews(currentReviews);
 
-    countCommonRating(currentReviews, setPlaceRating);
+    const nearbyOffers = offers.filter((offer: Offer) => offer.id !== Number(id) && offer.city.name === currentPlace.city.name);
+    setNearbyPlaces(nearbyOffers);
   }, [id, offers, reviews]);
 
   return (
@@ -97,17 +96,17 @@ function Room({ reviews }: RoomProps) {
           </div>
         </div>
       </header>
-      {place && placeReviews && placeRating && (
+      {place && placeReviews && (
         <main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {place.pic.map((pic) => (
-                  <div className="property__image-wrapper" key={pic}>
+                {place.images.map((image, index) => (
+                  <div className="property__image-wrapper" key={index.toString()}>
                     <img
                       className="property__image"
-                      src={pic}
-                      alt={place.name}
+                      src={image}
+                      alt={place.title}
                     />
                   </div>
                 ))}
@@ -115,21 +114,21 @@ function Room({ reviews }: RoomProps) {
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
-                {place.premium && (
+                {place.isPremium && (
                   <div className="property__mark">
                     <span>Premium</span>
                   </div>
                 )}
                 <div className="property__name-wrapper">
-                  <h1 className="property__name">{place.name}</h1>
+                  <h1 className="property__name">{place.title}</h1>
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{ width: placeRating[1] }}></span>
+                    <span style={{ width: countCurrrentRating(place.rating) }}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">
-                    {placeRating[0]}
+                    {place.rating}
                   </span>
                 </div>
                 <ul className="property__features">
@@ -140,7 +139,7 @@ function Room({ reviews }: RoomProps) {
                     {place.bedrooms} Bedrooms
                   </li>
                   <li className="property__feature property__feature--adults">
-                    Max {place.adults} adults
+                    Max {place.maxAdults} adults
                   </li>
                 </ul>
                 <div className="property__price">
@@ -150,9 +149,9 @@ function Room({ reviews }: RoomProps) {
                 <div className="property__inside">
                   <h2 className="property__inside-title">What&apos;s inside</h2>
                   <ul className="property__inside-list">
-                    {place.conveniences.map((convenience) => (
-                      <li className="property__inside-item" key={convenience}>
-                        {convenience}
+                    {place.goods.map((item) => (
+                      <li className="property__inside-item" key={item}>
+                        {item}
                       </li>
                     ))}
                   </ul>
@@ -162,28 +161,26 @@ function Room({ reviews }: RoomProps) {
                   <div className="property__host-user user">
                     <div
                       className={`property__avatar-wrapper ${
-                        place.hostPro ? 'property__avatar-wrapper--pro' : ''
+                        place.host.isPro ? 'property__avatar-wrapper--pro' : ''
                       } user__avatar-wrapper`}
                     >
                       <img
                         className="property__avatar user__avatar"
-                        src="img/avatar-angelina.jpg"
+                        src={place.host.avatarUrl}
                         width="74"
                         height="74"
-                        alt="Host avatar"
+                        alt={place.host.name}
                       />
                     </div>
-                    <span className="property__user-name">{place.host}</span>
-                    {place.hostPro && (
+                    <span className="property__user-name">{place.host.name}</span>
+                    {place.host.isPro && (
                       <span className="property__user-status">Pro</span>
                     )}
                   </div>
                   <div className="property__description">
-                    {place.description.map((paragraph) => (
-                      <p className="property__text" key={paragraph.slice(0, 10)}>
-                        {paragraph}
-                      </p>
-                    ))}
+                    <p className="property__text" key={place.description.slice(0, 10)}>
+                      {place.description}
+                    </p>
                   </div>
                 </div>
                 <section className="property__reviews reviews">
@@ -199,11 +196,13 @@ function Room({ reviews }: RoomProps) {
               </div>
             </div>
             <section className="property__map map">
-              <Map
-                city={city}
-                offers={offers.filter((offer) => offer.name !== place.name)}
-                selectedPoint={selectedPoint}
-              />
+              {offers && (
+                <Map
+                  city={offers[0].city}
+                  offers={offers.filter((offer: Offer) => offer.title !== place.title)}
+                  selectedPoint={selectedPoint}
+                />
+              )}
             </section>
           </section>
           <div className="container">
@@ -211,11 +210,13 @@ function Room({ reviews }: RoomProps) {
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <OtherPlacesList
-                offers={offers.filter((offer) => offer.name !== place.name)}
-                reviews={reviews}
-                onListItemHover={onListItemHover}
-              />
+              {nearbyPlaces.length &&
+                (
+                  <OtherPlacesList
+                    offers={nearbyPlaces}
+                    onListItemHover={onListItemHover}
+                  />
+                )}
             </section>
           </div>
         </main>

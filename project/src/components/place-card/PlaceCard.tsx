@@ -1,37 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import { Offer } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
-import { countCommonRating } from '../../utils/utils';
+import { countCurrrentRating } from '../../utils/utils';
+import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
   offer: Offer;
-  reviews: Reviews;
-  onListItemHover: (listItemName: string | undefined) => void;
+  onListItemHover: (selectedOfferId: number | undefined) => void;
 };
 
-function PlaceCard({ offer, reviews, onListItemHover }: PlaceCardProps) {
-  const [placeRating, setPlaceRating] = useState<[number, string]>([0, '0%']);
-
-  const navigate = useNavigate();
-
-  const navigateToRoomPage = () => {
-    const path = `offer/${offer.id}`;
-    navigate(path);
-  };
-
+function PlaceCard({ offer, onListItemHover }: PlaceCardProps) {
   const onListItemEnter = () => {
-    onListItemHover(offer.name);
+    onListItemHover(offer.id);
   };
 
   const onListItemLeave = () => {
     onListItemHover(undefined);
   };
-
-  useEffect(() => {
-    const currentReviews = reviews.filter((review) => review.id === offer.id);
-    countCommonRating(currentReviews, setPlaceRating);
-  }, [offer.id, reviews]);
 
   return (
     <article
@@ -39,7 +22,7 @@ function PlaceCard({ offer, reviews, onListItemHover }: PlaceCardProps) {
       onMouseEnter={onListItemEnter}
       onMouseLeave={onListItemLeave}
     >
-      {offer.premium && (
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
@@ -47,10 +30,10 @@ function PlaceCard({ offer, reviews, onListItemHover }: PlaceCardProps) {
       <div className="cities__image-wrapper place-card__image-wrapper">
         <img
           className="place-card__image"
-          src={offer.pic[0]}
+          src={offer.images[0]}
           width="260"
           height="200"
-          alt={offer.name}
+          alt={offer.title}
         />
       </div>
       <div className="place-card__info">
@@ -62,13 +45,13 @@ function PlaceCard({ offer, reviews, onListItemHover }: PlaceCardProps) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: placeRating[1] }}></span>
+            <span style={{ width: countCurrrentRating(offer.rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name" onClick={navigateToRoomPage}>
-          {offer.name}
-        </h2>
+        <Link className="place-card__name" to={`offer/${offer.id}`}>
+          {offer.title}
+        </Link>
         <p className="place-card__type">{offer.type}</p>
       </div>
     </article>

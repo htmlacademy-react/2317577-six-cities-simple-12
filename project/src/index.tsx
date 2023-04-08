@@ -4,11 +4,10 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {reviews} from './mocks/reviews';
 import {store} from './store';
-import {cities} from './mocks/cities';
+import {fetchOffersAction} from './store/asyncActions';
+import {ToastContainer} from 'react-toastify';
 
-const Settings = {
-  placesCount: 5,
-} as const;
+store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -17,7 +16,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App placesCount={Settings.placesCount} reviews={reviews} cities={cities} />
+      <ToastContainer />
+      <App reviews={reviews} />
     </Provider>
   </React.StrictMode>
 );

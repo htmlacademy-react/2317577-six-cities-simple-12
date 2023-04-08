@@ -1,6 +1,6 @@
+import { useEffect, useRef } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../constants/const';
 import { City } from '../../types/cities';
@@ -34,12 +34,12 @@ function Map({ city, offers, selectedPoint }: MapProps): JSX.Element {
         leaflet
           .marker(
             {
-              lat: offer.lat,
-              lng: offer.lng,
+              lat: offer.location.latitude,
+              lng: offer.location.longitude,
             },
             {
               icon:
-                selectedPoint !== undefined && offer.name === selectedPoint.name
+                selectedPoint !== undefined && offer.id === selectedPoint.id
                   ? currentCustomIcon
                   : defaultCustomIcon,
             }
@@ -51,7 +51,7 @@ function Map({ city, offers, selectedPoint }: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      map.setView([city.lat, city.lng]);
+      map.setView([city.location.latitude, city.location.longitude]);
     }
   }, [city, map]);
 
