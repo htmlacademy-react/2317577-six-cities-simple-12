@@ -26,4 +26,4 @@ export const setError = createAction<string | null>(Action.SET_ERROR);
 
 export const redirectToRoute = createAction<Approute>(Action.REDIRECT_TO_ROUTE);
 
-export const setUserInfo = createAction<Omit<UserInfo, 'token'>>(Action.SET_USER_INFO);
+export const setUserInfo = createAction<Omit<UserInfo, 'token'> | undefined>(Action.SET_USER_INFO);

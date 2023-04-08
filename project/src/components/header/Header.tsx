@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Approute, AuthorizationStatus } from "../../constants/const";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import Logo from "../logo/Logo";
+import { logoutAction } from "../../store/asyncActions";
 
 function Header() {
   const authorizationStatus = useAppSelector(
@@ -11,6 +12,12 @@ function Header() {
   const userInfo = useAppSelector(
     (state) => state.userInfo
   );
+
+  const dispatch = useAppDispatch();
+
+  const onLogout = () => {
+    dispatch(logoutAction());
+  };
 
   return (
     <header className="header">
@@ -33,9 +40,9 @@ function Header() {
                   </li>
                   <li className="header__nav-item">
                     <div className="header__nav-link">
-                      <Link className="header__signout" to={Approute.Login}>
+                      <div className="header__signout" onClick={onLogout}>
                         Sign out
-                      </Link>
+                      </div>
                     </div>
                   </li>
                 </>

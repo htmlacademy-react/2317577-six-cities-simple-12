@@ -12,7 +12,7 @@ import {
 import { APIRoute, Approute, AuthorizationStatus } from '../constants/const';
 import { AuthInfo } from '../types/authInfo';
 import { UserInfo } from '../types/userInfo';
-import { saveToken } from '../services/token';
+import { dropToken, saveToken } from '../services/token';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -64,10 +64,25 @@ export const loginAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('LOGIN', async ({ email, password }, { dispatch, extra: api }) => {
-  const {
-    data: { token },
-  } = await api.post<UserInfo>(APIRoute.Login, { email, password });
-  saveToken(token);
+  const { data } = await api.post<UserInfo>(APIRoute.Login, { email, password });
+  saveToken(data.token);
   dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+  dispatch(checkAuthAction());
   dispatch(redirectToRoute(Approute.Main));
+});
+
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>("LOGOUT", async (_arg, { dispatch, extra: api }) => {
+  await api.delete(APIRoute.Logout);
+  dropToken();
+  dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  dispatch(setUserInfo(undefined));
+  dispatch(redirectToRoute(Approute.Login));
 });
