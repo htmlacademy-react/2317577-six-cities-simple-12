@@ -1,6 +1,5 @@
 import { AUTH_TOKEN_KEY_NAME, Token } from '../constants/const';
 
-
 export const getToken = (): Token => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);
   return token ?? '';

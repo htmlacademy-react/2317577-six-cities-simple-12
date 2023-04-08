@@ -2,8 +2,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offers } from '../types/offers';
-import { loadOffers, setAuthorizationStatus, setOffersLoadingStatus } from './action';
+import {
+  loadOffers,
+  setAuthorizationStatus,
+  setOffersLoadingStatus,
+} from './action';
 import { APIRoute, AuthorizationStatus } from '../constants/const';
+import { AuthInfo } from '../types/authInfo';
+import { UserInfo } from '../types/userInfo';
+import { saveToken } from '../services/token';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -35,4 +42,20 @@ export const checkAuthAction = createAsyncThunk<
   } catch {
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   }
+});
+
+export const loginAction = createAsyncThunk<
+  void,
+  AuthInfo,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('LOGIN', async ({ email, password }, { dispatch, extra: api }) => {
+  const {
+    data: { token },
+  } = await api.post<UserInfo>(APIRoute.Login, { email, password });
+  saveToken(token);
+  dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
 });
