@@ -1,18 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadOffers, setOffersLoadingStatus } from './action';
+import { changeCity, loadOffers, setAuthorizationStatus, setOffersLoadingStatus } from './action';
 import { Offers } from '../types/offers';
+import { AuthorizationStatus } from '../constants/const';
 
 
 type InitialStateProps = {
   currentCity: string;
   offers: Offers | [];
   areOffersLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: InitialStateProps = {
   currentCity: 'Paris',
   offers: [],
   areOffersLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -25,6 +28,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.areOffersLoading = action.payload;
+    })
+    .addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 
