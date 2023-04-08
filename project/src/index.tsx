@@ -9,7 +9,7 @@ import ErrorPopup from './components/error-popup/ErrorPopup';
 
 store.dispatch(fetchOffersAction());
 
-store.dispatch(checkAuthAction())
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

@@ -1,7 +1,7 @@
-import "./error-popup.css";
-import { MouseEvent, useCallback, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { setError } from "../../store/action";
+import './error-popup.css';
+import { MouseEvent, useCallback, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setError } from '../../store/action';
 
 function ErrorPopup(): JSX.Element | null {
   const error = useAppSelector((state) => state.error);
@@ -17,18 +17,18 @@ function ErrorPopup(): JSX.Element | null {
   };
 
   const escFunction = useCallback((evt: KeyboardEvent) => {
-    if (evt.key === "Escape") {
+    if (evt.key === 'Escape') {
       closePopup();
     }
-  }, []);
+  }, [closePopup]);
 
   useEffect(() => {
-    document.addEventListener("keydown", escFunction, false);
+    document.addEventListener('keydown', escFunction, false);
 
     return () => {
-      document.removeEventListener("keydown", escFunction, false);
+      document.removeEventListener('keydown', escFunction, false);
     };
-  }, []);
+  }, [escFunction]);
 
   return error ? (
     <div className="error" onClick={handleOverlayClose}>

@@ -41,7 +41,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserInfo, (state, action) => {
       state.userInfo = action.payload;
-    })
+    });
 });
 
 export {reducer};

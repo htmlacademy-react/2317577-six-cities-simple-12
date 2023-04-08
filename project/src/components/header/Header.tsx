@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { Approute, AuthorizationStatus } from "../../constants/const";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import Logo from "../logo/Logo";
-import { logoutAction } from "../../store/asyncActions";
+import { Link } from 'react-router-dom';
+import { Approute, AuthorizationStatus } from '../../constants/const';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import Logo from '../logo/Logo';
+import { logoutAction } from '../../store/asyncActions';
 
 function Header() {
   const authorizationStatus = useAppSelector(

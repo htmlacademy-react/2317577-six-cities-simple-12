@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
-import { Approute } from "../../constants/const";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { AuthInfo } from "../../types/authInfo";
-import { useAppDispatch } from "../../hooks/redux";
-import { loginAction } from "../../store/asyncActions";
-import Logo from "../../components/logo/Logo";
+import { Link } from 'react-router-dom';
+import { Approute } from '../../constants/const';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { AuthInfo } from '../../types/authInfo';
+import { useAppDispatch } from '../../hooks/redux';
+import { loginAction } from '../../store/asyncActions';
+import Logo from '../../components/logo/Logo';
 
 function Login() {
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState<AuthInfo>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
