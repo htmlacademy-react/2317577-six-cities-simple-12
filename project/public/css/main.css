@@ -525,6 +525,10 @@ img {
   padding-right: 8px
 }
 
+.header__signout {
+  cursor: pointer;
+}
+
 .header__signout,
 .header__user-name {
   padding-top: 2px

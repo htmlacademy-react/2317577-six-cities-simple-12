@@ -4,10 +4,12 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {reviews} from './mocks/reviews';
 import {store} from './store';
-import {fetchOffersAction} from './store/asyncActions';
-import {ToastContainer} from 'react-toastify';
+import {checkAuthAction, fetchOffersAction} from './store/asyncActions';
+import ErrorPopup from './components/error-popup/ErrorPopup';
 
 store.dispatch(fetchOffersAction());
+
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -16,7 +18,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer />
+      <ErrorPopup />
       <App reviews={reviews} />
     </Provider>
   </React.StrictMode>

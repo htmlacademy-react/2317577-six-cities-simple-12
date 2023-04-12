@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Offer, Offers } from '../../types/offers';
 import { useAppSelector } from '../../hooks/redux';
 import PlacesList from '../../components/places-list/PlacesList';
-import Logo from '../../components/logo/Logo';
 import Map from '../../components/map/Map';
 import CitiesList from '../../components/cities-list/CitiesList';
 import { cities } from '../../constants/const';
+import Header from '../../components/header/Header';
 
 function MainScreen(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
@@ -56,32 +56,7 @@ function MainScreen(): JSX.Element {
         </svg>
       </div>
 
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <div className="header__nav-link">
-                    <span className="header__signout">Sign out</span>
-                  </div>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

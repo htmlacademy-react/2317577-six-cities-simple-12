@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { getToken } from './token';
-import { toast } from 'react-toastify';
+import { handleError } from './error-handler';
 
 const BASE_URL = 'https://12.react.pages.academy/six-cities-simple';
 const TIMEOUT = 5000;
@@ -33,7 +33,7 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        toast.warn(error.response.data.error);
+        handleError(error.response.data.error);
       }
 
       throw error;

@@ -4,13 +4,11 @@ import { useParams } from 'react-router';
 import { Offer, Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import { countCurrrentRating } from '../../utils/utils';
-import { Approute } from '../../constants/const';
-import { Link } from 'react-router-dom';
 import SendComment from '../../components/send-comment/SendComment';
 import ReviewsList from '../../components/reviews-list/Reviews-list';
-import Logo from '../../components/logo/Logo';
 import Map from '../../components/map/Map';
 import OtherPlacesList from '../../components/other-places-list/OtherPlacesList';
+import Header from '../../components/header/Header';
 
 type RoomProps = {
   reviews: Reviews;
@@ -70,39 +68,15 @@ function Room({ reviews }: RoomProps) {
         </svg>
       </div>
 
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={Approute.Main}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
+
       {place && placeReviews && (
         <main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {place.images.map((image, index) => (
-                  <div className="property__image-wrapper" key={index.toString()}>
+                {place.images.map((image) => (
+                  <div className="property__image-wrapper" key={image}>
                     <img
                       className="property__image"
                       src={image}
