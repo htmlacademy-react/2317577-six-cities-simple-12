@@ -9,13 +9,14 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/LoadingScreen';
 import HistoryRouter from '../history-router/History-Router';
 import browserHistory from '../../services/browser-history';
+import { getOffersLoadingStatus } from '../../store/offers/selectors';
 
 type AppScreenProps = {
   reviews: Reviews;
 };
 
 function App({ reviews }: AppScreenProps): JSX.Element {
-  const areOffersLoading = useAppSelector((state) => state.areOffersLoading);
+  const areOffersLoading = useAppSelector(getOffersLoadingStatus);
 
   if (areOffersLoading) {
     return <LoadingScreen />;
