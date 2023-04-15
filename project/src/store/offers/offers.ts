@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../constants/const';
 import { OffersData } from '../../types/state';
 import { fetchOffersAction } from '../asyncActions';
@@ -22,8 +22,8 @@ export const offersData = createSlice({
     clearError: (state) => {
       state.error = false;
     },
-    setFilterOptions: (state, action) => {
-      const data: FilterOptions = action.payload;
+    setFilterOptions: (state, action: PayloadAction<FilterOptions>) => {
+      const data = action.payload;
       state.filterOptions = data;
     }
   },
