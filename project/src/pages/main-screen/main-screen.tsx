@@ -6,8 +6,9 @@ import Map from '../../components/map/Map';
 import CitiesList from '../../components/cities-list/CitiesList';
 import { cities } from '../../constants/const';
 import Header from '../../components/header/Header';
-import { getOffers } from '../../store/offers/selectors';
+import { getFilterOptions, getOffers } from '../../store/offers/selectors';
 import { getCurrentCity } from '../../store/city/selectors';
+import OptionsList from '../../components/options-list/OptionsList';
 
 function MainScreen(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
@@ -17,20 +18,28 @@ function MainScreen(): JSX.Element {
 
   const offers: Offers = useAppSelector(getOffers);
   const city: string = useAppSelector(getCurrentCity);
+  const sortOption = useAppSelector(getFilterOptions);
 
   const onListItemHover = (selectedOfferId: number | undefined) => {
     const selectedOffer: Offer | undefined = offers.find((offer: Offer) => offer.id === selectedOfferId);
     setSelectedPoint(selectedOffer);
   };
 
-  const getCurrentOffers = () => {
-    const cityOffers = offers.filter((offer: Offer) => offer.city.name === city);
+  const getCurrentOffers = (type: 'price' | 'rating', order: 'asc' | 'desc') => {
+    const cityOffers = offers.filter((offer: Offer) => offer.city.name === city)
+      .sort((a, b) => {
+        if (order === 'asc') {
+          return a[type] - b[type];
+        } else {
+          return b[type] - a[type];
+        }
+      });
     setCurrentOffers(cityOffers);
   };
 
   useEffect(() => {
-    getCurrentOffers();
-  }, [city]);
+    getCurrentOffers(sortOption.type, sortOption.order);
+  }, [city, sortOption]);
 
   return (
     <div className="page page--gray page--main">
@@ -76,32 +85,7 @@ function MainScreen(): JSX.Element {
                   currentOffers.length === 1 ? 'place' : 'places'
                 } to stay in ${city}`}
               </b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              {<OptionsList />}
               {
                 <PlacesList
                   offers={currentOffers}
