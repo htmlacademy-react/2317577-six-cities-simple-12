@@ -1,17 +1,15 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Approute, AuthorizationStatus } from '../../constants/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Logo from '../logo/Logo';
 import { logoutAction } from '../../store/asyncActions';
+import { getAuthorizationStatus, getUser } from '../../store/user/selectors';
 
 function Header() {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const userInfo = useAppSelector(
-    (state) => state.userInfo
-  );
+  const userInfo = useAppSelector(getUser);
 
   const dispatch = useAppDispatch();
 
@@ -65,4 +63,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default React.memo(Header);

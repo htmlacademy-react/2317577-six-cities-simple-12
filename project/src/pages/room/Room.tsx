@@ -9,6 +9,7 @@ import ReviewsList from '../../components/reviews-list/Reviews-list';
 import Map from '../../components/map/Map';
 import OtherPlacesList from '../../components/other-places-list/OtherPlacesList';
 import Header from '../../components/header/Header';
+import { getOffers } from '../../store/offers/selectors';
 
 type RoomProps = {
   reviews: Reviews;
@@ -24,7 +25,7 @@ function Room({ reviews }: RoomProps) {
   );
   const [nearbyPlaces, setNearbyPlaces] = useState<Offers>([]);
 
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
 
   const onListItemHover = (listItemName: string | undefined) => {
     setSelectedPoint(offers.find((offer: Offer) => offer.title === listItemName));
