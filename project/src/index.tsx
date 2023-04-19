@@ -2,10 +2,8 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {reviews} from './mocks/reviews';
 import {store} from './store';
 import {checkAuthAction, fetchOffersAction} from './store/asyncActions';
-import ErrorPopup from './components/error-popup/ErrorPopup';
 
 store.dispatch(fetchOffersAction());
 
@@ -18,8 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ErrorPopup />
-      <App reviews={reviews} />
+      <App />
     </Provider>
   </React.StrictMode>
 );

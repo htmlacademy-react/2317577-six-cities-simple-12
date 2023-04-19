@@ -3,14 +3,14 @@ import { Approute } from '../../constants/const';
 import { Offer } from '../../types/offers';
 import { countCurrrentRating } from '../../utils/utils';
 
-type OtherPlaceCardProps = {
-  offer: Offer;
+type NearbyPlaceCardProps = {
+  nearbyOffer: Offer;
   onListItemHover: (listItemName: string | undefined) => void;
 }
 
-function OtherPlaceCard({offer, onListItemHover}: OtherPlaceCardProps) {
+function NearbyPlaceCard({nearbyOffer, onListItemHover}: NearbyPlaceCardProps) {
   const onListItemEnter = () => {
-    onListItemHover(offer.title);
+    onListItemHover(nearbyOffer.title);
   };
 
   const onListItemLeave = () => {
@@ -26,7 +26,7 @@ function OtherPlaceCard({offer, onListItemHover}: OtherPlaceCardProps) {
         <Link to={Approute.Main}>
           <img
             className="place-card__image"
-            src={offer.images[0]}
+            src={nearbyOffer.images[0]}
             width="260"
             height="200"
             alt="Wood and stone place"
@@ -36,7 +36,7 @@ function OtherPlaceCard({offer, onListItemHover}: OtherPlaceCardProps) {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value">&euro;{nearbyOffer.price}</b>
             <span className="place-card__price-text">
               &#47;&nbsp;night
             </span>
@@ -44,18 +44,18 @@ function OtherPlaceCard({offer, onListItemHover}: OtherPlaceCardProps) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: countCurrrentRating(offer.rating) }}></span>
+            <span style={{ width: countCurrrentRating(nearbyOffer.rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${nearbyOffer.id}`}>{nearbyOffer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.description}</p>
+        <p className="place-card__type">{nearbyOffer.description}</p>
       </div>
     </article>
   );
 }
 
 
-export default OtherPlaceCard;
+export default NearbyPlaceCard;

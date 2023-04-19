@@ -1,12 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../constants/const';
 import { OffersData } from '../../types/state';
-import { fetchOffersAction } from '../asyncActions';
+import { fetchNearbyOffersAction, fetchOffersAction, fetchSingleOfferAction } from '../asyncActions';
+import { FilterOptions } from '../../types/filterOptions';
 
 const initialState: OffersData = {
   offers: [],
-  areOffersLoading: false,
   error: false,
+  areOffersLoading: false,
+  singleOffer: undefined,
+  isSingleOfferLoading: false,
+  notFoundSingleOfferError: false,
+  nearbyOffers: [],
+  areNearbyOffersLoading: false,
+  filterOptions: {
+    name: 'popular',
+    type: 'rating',
+    order: 'asc',
+  },
 };
 
 export const offersData = createSlice({
@@ -15,6 +26,10 @@ export const offersData = createSlice({
   reducers: {
     clearError: (state) => {
       state.error = false;
+    },
+    setFilterOptions: (state, action: PayloadAction<FilterOptions>) => {
+      const data = action.payload;
+      state.filterOptions = data;
     }
   },
   extraReducers(builder) {
@@ -30,8 +45,32 @@ export const offersData = createSlice({
       .addCase(fetchOffersAction.rejected, (state) => {
         state.areOffersLoading = false;
         state.error = true;
+      })
+      .addCase(fetchSingleOfferAction.pending, (state) => {
+        state.isSingleOfferLoading = true;
+        state.notFoundSingleOfferError = false;
+      })
+      .addCase(fetchSingleOfferAction.fulfilled, (state, action) => {
+        state.isSingleOfferLoading = false;
+        state.singleOffer = action.payload;
+      })
+      .addCase(fetchSingleOfferAction.rejected, (state) => {
+        state.isSingleOfferLoading = false;
+        state.notFoundSingleOfferError = true;
+      })
+      .addCase(fetchNearbyOffersAction.pending, (state) => {
+        state.areNearbyOffersLoading = true;
+        state.error = false;
+      })
+      .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
+        state.areNearbyOffersLoading = false;
+        state.nearbyOffers = action.payload;
+      })
+      .addCase(fetchNearbyOffersAction.rejected, (state) => {
+        state.areNearbyOffersLoading = false;
+        state.error = true;
       });
   },
 });
 
-export const { clearError } = offersData.actions;
+export const { clearError, setFilterOptions } = offersData.actions;

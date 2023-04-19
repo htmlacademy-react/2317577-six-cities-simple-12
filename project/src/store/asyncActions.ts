@@ -1,12 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { Offers } from '../types/offers';
+import { Offer, Offers } from '../types/offers';
 import { redirectToRoute } from './action';
 import { APIRoute, Approute } from '../constants/const';
 import { AuthInfo } from '../types/authInfo';
 import { UserInfo } from '../types/userInfo';
 import { dropToken, saveToken } from '../services/token';
+import { Comments } from '../types/comments';
 
 export const fetchOffersAction = createAsyncThunk<
   Offers,
@@ -20,6 +21,69 @@ export const fetchOffersAction = createAsyncThunk<
   const { data } = await api.get<Offers>(APIRoute.Offers);
   return data;
 });
+
+export const fetchSingleOfferAction = createAsyncThunk<
+  Offer,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('LOAD_OFFER', async (id, { dispatch, extra: api }) => {
+  const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+  return data;
+});
+
+export const fetchNearbyOffersAction = createAsyncThunk<
+  Offers,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('LOAD_NEARBY_OFFERS', async (id, { dispatch, extra: api }) => {
+  const { data } = await api.get<Offers>(
+    `${APIRoute.Offers}/${id}/nearby`
+  );
+  return data.slice(0, 3);
+});
+
+export const fetchCommentsAction = createAsyncThunk<
+  Comments,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('LOAD_COMMENTS', async (hotelId, { dispatch, extra: api }) => {
+  const { data } = await api.get<Comments>(`${APIRoute.Comments}/${hotelId}`);
+  return data;
+});
+
+export const postCommentAction = createAsyncThunk<
+  Comments,
+  { hotelId: number; comment: string; rating: number },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(
+  'POST_COMMENT',
+  async ({ hotelId, comment, rating }, { dispatch, extra: api }) => {
+    const { data } = await api.post<Comments>(
+      `${APIRoute.Comments}/${hotelId}`,
+      {
+        comment,
+        rating,
+      }
+    );
+    return data;
+  }
+);
 
 export const checkAuthAction = createAsyncThunk<
   UserInfo,

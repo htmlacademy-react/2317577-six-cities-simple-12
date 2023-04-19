@@ -1,16 +1,26 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import RatingStar from './rating-star/RatingStar';
+import { useAppDispatch } from '../../hooks/redux';
+import { postCommentAction } from '../../store/asyncActions';
 
-function SendComment() {
+type SendCommentProps = {
+  hotelId: number;
+};
+
+function SendComment({ hotelId }: SendCommentProps) {
+  const dispatch = useAppDispatch();
+
   const [formData, setFormData] = useState({
-    rating: '',
+    rating: 0,
     review: '',
     date: new Date(),
   });
 
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
-  const handleInput = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInput = (
+    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = evt.target;
     setFormData({
       ...formData,
@@ -21,18 +31,25 @@ function SendComment() {
   const clearFormData = () => {
     setFormData({
       ...formData,
-      rating: '',
+      rating: 0,
       review: '',
     });
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    dispatch(
+      postCommentAction({
+        hotelId: hotelId,
+        comment: formData.review,
+        rating: formData.rating,
+      })
+    );
     clearFormData();
   };
 
   useEffect(() => {
-    if (formData.rating !== '' && formData.review.length >= 50) {
+    if (formData.rating !== 0 && formData.review.length >= 50) {
       setSubmitButtonDisabled(false);
     } else {
       setSubmitButtonDisabled(true);
