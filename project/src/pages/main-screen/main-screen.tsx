@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Offer, Offers } from '../../types/offers';
 import { useAppSelector } from '../../hooks/redux';
+import { getFilterOptions, getOffers } from '../../store/offers/selectors';
+import { getCurrentCity } from '../../store/city/selectors';
+import { cities } from '../../constants/const';
 import PlacesList from '../../components/places-list/PlacesList';
 import Map from '../../components/map/Map';
 import CitiesList from '../../components/cities-list/CitiesList';
-import { cities } from '../../constants/const';
 import Header from '../../components/header/Header';
-import { getFilterOptions, getOffers } from '../../store/offers/selectors';
-import { getCurrentCity } from '../../store/city/selectors';
 import OptionsList from '../../components/options-list/OptionsList';
 
 function MainScreen(): JSX.Element {
