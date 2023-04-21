@@ -70,7 +70,7 @@ function Login() {
             <h1 className="login__title">Sign in</h1>
             <form className="login__form form" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
+                <label className="visually-hidden" htmlFor='emailId'>E-mail</label>
                 <input
                   className="login__input form__input"
                   type="email"
@@ -78,11 +78,12 @@ function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
+                  id='emailId'
                   required
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
+                <label className="visually-hidden" htmlFor='passwordId'>Password</label>
                 <input
                   className="login__input form__input"
                   type="password"
@@ -90,6 +91,7 @@ function Login() {
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleChange}
+                  id='passwordId'
                   required
                 />
               </div>

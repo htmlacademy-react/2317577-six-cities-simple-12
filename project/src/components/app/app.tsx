@@ -6,8 +6,6 @@ import Login from '../../pages/login/Login';
 import Room from '../../pages/room/Room';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/LoadingScreen';
-import HistoryRouter from '../history-router/History-Router';
-import browserHistory from '../../services/browser-history';
 import { getOffersLoadingStatus } from '../../store/offers/selectors';
 
 function App(): JSX.Element {
@@ -18,14 +16,12 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={Approute.Main} element={<MainScreen />} />
         <Route path={Approute.Room} element={<Room />} />
         <Route path={Approute.Login} element={<Login />} />
         <Route path="*" element={<NotFoundScreen />} />
       </Routes>
-    </HistoryRouter>
   );
 }
 
