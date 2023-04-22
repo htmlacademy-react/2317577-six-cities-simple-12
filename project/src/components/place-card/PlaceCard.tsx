@@ -18,6 +18,7 @@ function PlaceCard({ offer, onListItemHover }: PlaceCardProps) {
 
   return (
     <article
+      data-testid="place-card-container"
       className="cities__card place-card"
       onMouseEnter={onListItemEnter}
       onMouseLeave={onListItemLeave}
@@ -39,7 +40,7 @@ function PlaceCard({ offer, onListItemHover }: PlaceCardProps) {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value" data-testid='place-card-price'>&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
         </div>
@@ -49,7 +50,7 @@ function PlaceCard({ offer, onListItemHover }: PlaceCardProps) {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <Link className="place-card__name" to={`offer/${offer.id}`}>
+        <Link className="place-card__name" to={`offer/${offer.id}`} data-testid='place-card-title'>
           {offer.title}
         </Link>
         <p className="place-card__type">{offer.type}</p>

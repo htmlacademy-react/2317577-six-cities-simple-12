@@ -16,12 +16,12 @@ function App(): JSX.Element {
   }
 
   return (
-      <Routes>
-        <Route path={Approute.Main} element={<MainScreen />} />
-        <Route path={Approute.Room} element={<Room />} />
-        <Route path={Approute.Login} element={<Login />} />
-        <Route path="*" element={<NotFoundScreen />} />
-      </Routes>
+    <Routes>
+      <Route path={Approute.Main} element={<MainScreen />} />
+      <Route path={Approute.Room} element={<Room />} />
+      <Route path={Approute.Login} element={<Login />} />
+      <Route path="*" element={<NotFoundScreen />} />
+    </Routes>
   );
 }
 

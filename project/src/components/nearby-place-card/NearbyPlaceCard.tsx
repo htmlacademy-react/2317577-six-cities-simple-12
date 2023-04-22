@@ -5,12 +5,12 @@ import { countCurrrentRating } from '../../utils/utils';
 
 type NearbyPlaceCardProps = {
   nearbyOffer: Offer;
-  onListItemHover: (listItemName: string | undefined) => void;
+  onListItemHover: (listItemName: number | undefined) => void;
 }
 
 function NearbyPlaceCard({nearbyOffer, onListItemHover}: NearbyPlaceCardProps) {
   const onListItemEnter = () => {
-    onListItemHover(nearbyOffer.title);
+    onListItemHover(nearbyOffer.id);
   };
 
   const onListItemLeave = () => {
@@ -21,6 +21,7 @@ function NearbyPlaceCard({nearbyOffer, onListItemHover}: NearbyPlaceCardProps) {
     <article className="near-places__card place-card"
       onMouseEnter={onListItemEnter}
       onMouseLeave={onListItemLeave}
+      data-testid='nearbyplace-container'
     >
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link to={Approute.Main}>
@@ -36,7 +37,7 @@ function NearbyPlaceCard({nearbyOffer, onListItemHover}: NearbyPlaceCardProps) {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{nearbyOffer.price}</b>
+            <b className="place-card__price-value" data-testid='nearbyplace-card-price'>&euro;{nearbyOffer.price}</b>
             <span className="place-card__price-text">
               &#47;&nbsp;night
             </span>
@@ -49,7 +50,7 @@ function NearbyPlaceCard({nearbyOffer, onListItemHover}: NearbyPlaceCardProps) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${nearbyOffer.id}`}>{nearbyOffer.title}</Link>
+          <Link to={`/offer/${nearbyOffer.id}`} data-testid='nearbyplace-card-title'>{nearbyOffer.title}</Link>
         </h2>
         <p className="place-card__type">{nearbyOffer.description}</p>
       </div>

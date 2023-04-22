@@ -9,7 +9,7 @@ describe('Component: NotFoundScreen', () => {
 
     render(
       <HistoryRouter history={history}>
-          <NotFoundScreen />
+        <NotFoundScreen />
       </HistoryRouter>,
     );
 

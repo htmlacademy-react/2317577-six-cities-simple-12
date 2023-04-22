@@ -28,8 +28,8 @@ function Room(): JSX.Element {
   const comments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const onListItemHover = (listItemName: string | undefined) => {
-    setSelectedPoint(nearbyOffers.find((nearbyOffer: Offer) => nearbyOffer.title === listItemName));
+  const onListItemHover = (listItemId: number | undefined) => {
+    setSelectedPoint(nearbyOffers.find((nearbyOffer: Offer) => nearbyOffer.id === listItemId));
   };
 
   const isSingleOfferLoading = useAppSelector(getSingleOfferLoadingStatus);

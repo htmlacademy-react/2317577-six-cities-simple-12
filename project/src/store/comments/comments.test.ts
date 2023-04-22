@@ -1,13 +1,13 @@
-import { Comments } from "../../types/comments";
-import { makeMockComments } from "../../utils/mocks";
-import { fetchCommentsAction } from "../asyncActions";
-import { commentsData } from "./comments";
+import { Comments } from '../../types/comments';
+import { makeMockComments } from '../../utils/mocks';
+import { fetchCommentsAction } from '../asyncActions';
+import { commentsData } from './comments';
 
 const mockComments: Comments = makeMockComments();
 
-describe("Reducer: commentsData", () => {
-  it("Without additional parameters should return initial state", () => {
-    expect(commentsData.reducer(undefined, { type: "UNKNOWN_ACTION" })).toEqual(
+describe('Reducer: commentsData', () => {
+  it('Without additional parameters should return initial state', () => {
+    expect(commentsData.reducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(
       {
         comments: [],
         areCommentsLoading: false,
@@ -15,7 +15,7 @@ describe("Reducer: commentsData", () => {
     );
   });
 
-  it('Should make "areOffersLoadingState" true', () => {
+  it('Should make \'areOffersLoadingState\' true', () => {
     const state = {
       comments: [],
       areCommentsLoading: false,
@@ -28,7 +28,7 @@ describe("Reducer: commentsData", () => {
     });
   });
 
-  it('Should update offers by loading them. And "areOffersLoading" = false', () => {
+  it('Should update offers by loading them. And \'areOffersLoading\' = false', () => {
     const state = {
       comments: [],
       areCommentsLoading: false,

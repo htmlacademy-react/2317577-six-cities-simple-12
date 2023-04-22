@@ -8,7 +8,7 @@ type PlacesListProps = {
 
 function PlacesList({ offers, onListItemHover }: PlacesListProps) {
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className="cities__places-list places__list tabs__content" data-testid='places-list'>
       {offers.map((offer) => (
         <PlaceCard
           offer={offer}

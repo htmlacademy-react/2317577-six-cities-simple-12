@@ -16,7 +16,7 @@ function SendComment({ hotelId }: SendCommentProps) {
     date: new Date(),
   });
 
-  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(true);
 
   const handleInput = (
     evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,6 +62,7 @@ function SendComment({ hotelId }: SendCommentProps) {
       action="#"
       method="post"
       onSubmit={handleSubmit}
+      data-testid='send-comment-form'
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -78,6 +79,7 @@ function SendComment({ hotelId }: SendCommentProps) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
         onChange={handleInput}
+        data-testid='review-id'
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -90,6 +92,7 @@ function SendComment({ hotelId }: SendCommentProps) {
           className="reviews__submit form__submit button"
           type="submit"
           disabled={submitButtonDisabled}
+          data-testid='send-comment-button'
         >
           Submit
         </button>

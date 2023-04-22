@@ -1,10 +1,10 @@
-import { createAPI } from "../services/api";
-import MockAdapter from "axios-mock-adapter";
-import { configureMockStore } from "@jedmao/redux-mock-store";
-import { State } from "../types/state";
-import thunk, { ThunkDispatch } from "redux-thunk";
-import { Action } from "redux";
-import { APIRoute } from "../constants/const";
+import { createAPI } from '../services/api';
+import MockAdapter from 'axios-mock-adapter';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { State } from '../types/state';
+import thunk, { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
+import { APIRoute } from '../constants/const';
 import {
   checkAuthAction,
   fetchCommentsAction,
@@ -13,11 +13,11 @@ import {
   fetchSingleOfferAction,
   loginAction,
   logoutAction,
-} from "./asyncActions";
-import { redirectToRoute } from "./action";
-import { makeMockComments, makeMockOffer, makeMockOffers } from "../utils/mocks";
+} from './asyncActions';
+import { redirectToRoute } from './action';
+import { makeMockComments, makeMockOffer, makeMockOffers } from '../utils/mocks';
 
-describe("Async actions", () => {
+describe('Async actions', () => {
   const api = createAPI();
   const mockApi = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
@@ -28,7 +28,7 @@ describe("Async actions", () => {
     ThunkDispatch<State, typeof api, Action>
   >(middlewares);
 
-  it('Should state Authorization status "auth" when server return 200', async () => {
+  it('Should state Authorization status \'auth\' when server return 200', async () => {
     const store = mockStore();
     mockApi.onGet(APIRoute.Login).reply(200, []);
 
@@ -44,13 +44,13 @@ describe("Async actions", () => {
     ]);
   });
 
-  it("Should dispatch dispatch loginAction, RedirectToRoute and checkAuthAction when POST /login", async () => {
+  it('Should dispatch dispatch loginAction, RedirectToRoute and checkAuthAction when POST /login', async () => {
     const fakeUser = {
-      email: "test@test.ru",
-      password: "12345",
+      email: 'test@test.ru',
+      password: '12345',
     };
 
-    mockApi.onPost(APIRoute.Login).reply(200, { token: "secret" });
+    mockApi.onPost(APIRoute.Login).reply(200, { token: 'secret' });
 
     const store = mockStore();
     Storage.prototype.setItem = jest.fn();
@@ -67,7 +67,7 @@ describe("Async actions", () => {
     ]);
 
     expect(Storage.prototype.setItem).toBeCalledTimes(1);
-    expect(Storage.prototype.setItem).toBeCalledWith("offers-token", "secret");
+    expect(Storage.prototype.setItem).toBeCalledWith('offers-token', 'secret');
   });
 
   it('should dispatch Logout when Delete /logout', async () => {
@@ -92,7 +92,7 @@ describe("Async actions", () => {
     expect(Storage.prototype.removeItem).toBeCalledWith('offers-token');
   });
 
-  it('should dispatch "fetchOffersAction" when GET /offers', async () => {
+  it('should dispatch \'fetchOffersAction\' when GET /offers', async () => {
     const mockOffers = makeMockOffers();
     mockApi.onGet(APIRoute.Offers).reply(200, mockOffers);
 
@@ -108,7 +108,7 @@ describe("Async actions", () => {
     ]);
   });
 
-  it('should dispatch "fetchSingleOfferAction" when GET /offer/:id', async () => {
+  it('should dispatch \'fetchSingleOfferAction\' when GET /offer/:id', async () => {
     const mockOffer = makeMockOffer();
     mockApi.onGet(`${APIRoute.Offers}/${mockOffer.id}`).reply(200, mockOffer);
 
@@ -124,7 +124,7 @@ describe("Async actions", () => {
     ]);
   });
 
-  it('should dispatch "fetchNearbyOffersAction" when GET /offer/:id/nearby', async () => {
+  it('should dispatch \'fetchNearbyOffersAction\' when GET /offer/:id/nearby', async () => {
     const mockOffers = makeMockOffers();
     mockApi.onGet(`${APIRoute.Offers}/${mockOffers[0].id}/nearby`).reply(200, mockOffers);
 
@@ -140,7 +140,7 @@ describe("Async actions", () => {
     ]);
   });
 
-  it('should dispatch "fetchCommentsAction" when GET /comments/:hotelId', async () => {
+  it('should dispatch \'fetchCommentsAction\' when GET /comments/:hotelId', async () => {
     const mockComments = makeMockComments();
     mockApi.onGet(`${APIRoute.Comments}/1`).reply(200, mockComments);
 

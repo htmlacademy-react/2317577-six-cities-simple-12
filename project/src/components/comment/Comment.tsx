@@ -1,14 +1,7 @@
 import {Comment as CommentType} from '../../types/comments';
+import { countCurrrentRating, parseDate } from '../../utils/utils';
 
 function Comment({comment, user, rating, date}: CommentType) {
-  const countRating = () => `${rating * 20}%`;
-
-  const parseDate = () => {
-    const currentDate = new Date(date);
-    const month = currentDate.toLocaleString('default', { month: 'long' });
-    return `${month} ${currentDate.getFullYear()}`;
-  };
-
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -26,7 +19,7 @@ function Comment({comment, user, rating, date}: CommentType) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: countRating() }}></span>
+            <span style={{ width: countCurrrentRating(rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -34,7 +27,7 @@ function Comment({comment, user, rating, date}: CommentType) {
           {comment}
         </p>
         <time className="reviews__time" dateTime="2019-04-24">
-          {parseDate()}
+          {parseDate(date)}
         </time>
       </div>
     </li>
