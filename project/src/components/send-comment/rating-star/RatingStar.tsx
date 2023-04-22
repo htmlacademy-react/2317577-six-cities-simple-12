@@ -15,6 +15,7 @@ function RatingStar({value, onChange}: RatingStarProps) {
         type="radio"
         value={value}
         onChange={onChange}
+        data-testid='rating-id'
       />
       <label
         htmlFor={`${value}-stars`}

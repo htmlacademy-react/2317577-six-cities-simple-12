@@ -4,7 +4,7 @@ import { getFilterOptions } from '../../store/offers/selectors';
 import { FilterOptions } from '../../types/filterOptions';
 import OptionItem from '../option-item/OptionItem';
 
-const sortItems: FilterOptions[] = [
+export const sortItems: FilterOptions[] = [
   { name: 'Popular', type: 'rating', order: 'asc' },
   { name: 'Price: low to high', type: 'price', order: 'asc' },
   { name: 'Price: high to low', type: 'price', order: 'desc' },
@@ -39,6 +39,7 @@ function OptionsList() {
         className="places__sorting-type"
         tabIndex={0}
         onClick={toggleVisiblePopup}
+        data-testid='active-filter-option'
       >
         {activeFilterOption.name}
         <svg className="places__sorting-arrow" width="7" height="4">

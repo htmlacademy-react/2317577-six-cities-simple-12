@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {store} from './store';
 import {checkAuthAction, fetchOffersAction} from './store/asyncActions';
+import HistoryRouter from './components/history-router/History-Router';
+import browserHistory from './services/browser-history';
 
 store.dispatch(fetchOffersAction());
 
@@ -16,7 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <HistoryRouter history={browserHistory}>
+        <App />
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>
 );

@@ -3,12 +3,12 @@ import NearbyPlaceCard from '../nearby-place-card/NearbyPlaceCard';
 
 type NearbyPlacesListProps = {
   nearbyOffers: Offers;
-  onListItemHover: (listItemName: string | undefined) => void;
+  onListItemHover: (listItemName: number | undefined) => void;
 };
 
 function NearbyPlacesList ({ nearbyOffers, onListItemHover }: NearbyPlacesListProps) {
   return (
-    <div className="near-places__list places__list">
+    <div className="near-places__list places__list" data-testid='nearbyplaces-list'>
       {nearbyOffers.map((nearbyOffer) => (
         <NearbyPlaceCard
           nearbyOffer={nearbyOffer}
