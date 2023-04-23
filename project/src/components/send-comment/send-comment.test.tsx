@@ -2,10 +2,10 @@ import { render, screen, act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-router/History-Router';
+import HistoryRouter from '../history-router/history-router';
 import { makeRandomReviewIndex } from '../../utils/mocks';
 import { mockStore } from '../../utils/mockStore';
-import SendComment from './SendComment';
+import SendComment from './send-comment';
 
 describe('SendComment component', () => {
   const store = mockStore({

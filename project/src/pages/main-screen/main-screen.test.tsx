@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { mockStore } from '../../utils/mockStore';
 import { Provider } from 'react-redux';
-import HistoryRouter from '../../components/history-router/History-Router';
+import HistoryRouter from '../../components/history-router/history-router';
 import { createMemoryHistory } from 'history';
 import MainScreen from './main-screen';
 import {

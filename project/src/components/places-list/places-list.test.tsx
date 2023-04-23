@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import { makeMockOffers } from '../../utils/mocks';
-import PlacesList from './PlacesList';
-import HistoryRouter from '../history-router/History-Router';
+import PlacesList from './places-list';
+import HistoryRouter from '../history-router/history-router';
 import { createMemoryHistory } from 'history';
 
 describe('CityList component', () => {

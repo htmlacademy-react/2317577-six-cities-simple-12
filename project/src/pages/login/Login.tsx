@@ -4,7 +4,7 @@ import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { AuthInfo } from '../../types/authInfo';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { loginAction } from '../../store/asyncActions';
-import Logo from '../../components/logo/Logo';
+import Logo from '../../components/logo/logo';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import {Navigate } from 'react-router-dom';
 

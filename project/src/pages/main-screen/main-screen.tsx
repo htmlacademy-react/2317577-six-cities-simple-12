@@ -4,12 +4,12 @@ import { useAppSelector } from '../../hooks/redux';
 import { getFilterOptions, getOffers } from '../../store/offers/selectors';
 import { getCurrentCity } from '../../store/city/selectors';
 import { cities } from '../../constants/const';
-import PlacesList from '../../components/places-list/PlacesList';
-import Map from '../../components/map/Map';
-import CitiesList from '../../components/cities-list/CitiesList';
-import Header from '../../components/header/Header';
-import OptionsList from '../../components/options-list/OptionsList';
-import MainEmpty from '../../components/main-empty/MainEmpty';
+import PlacesList from '../../components/places-list/places-list';
+import Map from '../../components/map/map';
+import CitiesList from '../../components/cities-list/cities-list';
+import Header from '../../components/header/header';
+import OptionsList from '../../components/options-list/options-list';
+import MainEmpty from '../../components/main-empty/main-empty';
 
 function MainScreen(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Comments } from '../../types/comments';
-import Comment from '../comment/Comment';
+import Comment from '../comment/comment';
 
 type CommentsListProps = {
   comments: Comments;

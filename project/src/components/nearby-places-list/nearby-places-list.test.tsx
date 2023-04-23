@@ -1,8 +1,8 @@
 import { render, screen, within } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-router/History-Router';
+import HistoryRouter from '../history-router/history-router';
 import { makeMockOffers } from '../../utils/mocks';
-import NearbyPlacesList from './NearbyPlacesList';
+import NearbyPlacesList from './nearby-places-list';
 
 describe('NearbyPlacesList component', () => {
   const mockOffers = makeMockOffers();

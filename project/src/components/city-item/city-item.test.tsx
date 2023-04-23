@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { makeFakeCity } from '../../utils/mocks';
 import { mockStore } from '../../utils/mockStore';
-import CityItem from './CityItem';
+import CityItem from './city-item';
 
 describe('City Item component', () => {
   const mockCity = makeFakeCity();

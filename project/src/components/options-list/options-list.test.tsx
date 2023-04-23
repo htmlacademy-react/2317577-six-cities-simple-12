@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import OptionsList from './OptionsList';
+import OptionsList from './options-list';
 import { Provider } from 'react-redux';
 import { mockStore } from '../../utils/mockStore';
 import { makeMockFilterOptions } from '../../utils/mocks';

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { mockStore } from '../../utils/mockStore';
 import { makeFakeCity } from '../../utils/mocks';
-import MainEmpty from './MainEmpty';
+import MainEmpty from './main-empty';
 
 describe('MainEmpty Component', () => {
   const mockCity = makeFakeCity();

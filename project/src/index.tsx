@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {store} from './store';
 import {checkAuthAction, fetchOffersAction} from './store/asyncActions';
-import HistoryRouter from './components/history-router/History-Router';
+import HistoryRouter from './components/history-router/history-router';
 import browserHistory from './services/browser-history';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

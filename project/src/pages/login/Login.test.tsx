@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { mockStore } from '../../utils/mockStore';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../../components/history-router/History-Router';
-import Login from './Login';
+import HistoryRouter from '../../components/history-router/history-router';
+import Login from './login';
 import { AuthorizationStatus } from '../../constants/const';
 
 describe('Login component', () => {

@@ -7,12 +7,12 @@ import { getComments, getCommentsLoadingStatus } from '../../store/comments/sele
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { AuthorizationStatus } from '../../constants/const';
 import { countCurrrentRating } from '../../utils/utils';
-import Header from '../../components/header/Header';
-import CommentsList from '../../components/comments-list/CommentsList';
-import SendComment from '../../components/send-comment/SendComment';
-import Map from '../../components/map/Map';
-import NearbyPlacesList from '../../components/nearby-places-list/NearbyPlacesList';
-import LoadingScreen from '../loading-screen/LoadingScreen';
+import Header from '../../components/header/header';
+import CommentsList from '../../components/comments-list/comments-list';
+import SendComment from '../../components/send-comment/send-comment';
+import Map from '../../components/map/map';
+import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
+import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function Room(): JSX.Element {

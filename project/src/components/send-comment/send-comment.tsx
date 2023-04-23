@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import RatingStar from './rating-star/RatingStar';
+import RatingStar from './rating-star/rating-star';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { postCommentAction } from '../../store/asyncActions';
 import { getPostLoadingStatus } from '../../store/comments/selectors';

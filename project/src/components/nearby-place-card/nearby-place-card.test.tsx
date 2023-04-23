@@ -1,11 +1,11 @@
 import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import HistoryRouter from '../history-router/History-Router';
+import HistoryRouter from '../history-router/history-router';
 import { createMemoryHistory } from 'history';
 import { makeMockOffer } from '../../utils/mocks';
 import { mockStore } from '../../utils/mockStore';
-import NearbyPlaceCard from './NearbyPlaceCard';
+import NearbyPlaceCard from './nearby-place-card';
 import { Approute } from '../../constants/const';
 
 describe('NearbyPlaceCard component', () => {

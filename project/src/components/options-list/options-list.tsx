@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { getFilterOptions } from '../../store/offers/selectors';
 import { FilterOptions } from '../../types/filterOptions';
-import OptionItem from '../option-item/OptionItem';
+import OptionItem from '../option-item/option-item';
 
 export const sortItems: FilterOptions[] = [
   { name: 'Popular', type: 'rating', order: 'asc' },

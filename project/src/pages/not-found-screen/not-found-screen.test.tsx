@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import NotFoundScreen from './not-found-screen';
-import HistoryRouter from '../../components/history-router/History-Router';
+import HistoryRouter from '../../components/history-router/history-router';
 
 describe('Component: NotFoundScreen', () => {
   it('should render correctly', () => {
