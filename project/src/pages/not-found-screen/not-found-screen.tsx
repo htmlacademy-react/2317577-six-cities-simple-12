@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {Approute} from '../../constants/const';
-import Logo from '../../components/logo/Logo';
+import Logo from '../../components/logo/logo';
 
 function NotFoundScreen() {
   return (

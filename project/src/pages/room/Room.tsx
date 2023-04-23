@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useParams } from 'react-router';
 import { getNearbyOffers, getNearbyOffersLoadingStatus, getSingleOffer, getSingleOfferErrorStatus, getSingleOfferLoadingStatus } from '../../store/offers/selectors';
@@ -6,20 +6,17 @@ import { fetchCommentsAction, fetchNearbyOffersAction, fetchSingleOfferAction } 
 import { getComments, getCommentsLoadingStatus } from '../../store/comments/selectors';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { AuthorizationStatus } from '../../constants/const';
-import { Offer } from '../../types/offers';
 import { countCurrrentRating } from '../../utils/utils';
-import Header from '../../components/header/Header';
-import CommentsList from '../../components/comments-list/CommentsList';
-import SendComment from '../../components/send-comment/SendComment';
-import Map from '../../components/map/Map';
-import NearbyPlacesList from '../../components/nearby-places-list/NearbyPlacesList';
-import LoadingScreen from '../loading-screen/LoadingScreen';
+import Header from '../../components/header/header';
+import CommentsList from '../../components/comments-list/comments-list';
+import SendComment from '../../components/send-comment/send-comment';
+import Map from '../../components/map/map';
+import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
+import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function Room(): JSX.Element {
   const { id } = useParams();
-
-  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>();
 
   const dispatch = useAppDispatch();
 
@@ -27,11 +24,6 @@ function Room(): JSX.Element {
   const nearbyOffers = useAppSelector(getNearbyOffers);
   const comments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  const onListItemHover = (listItemId: number | undefined) => {
-    setSelectedPoint(nearbyOffers.find((nearbyOffer: Offer) => nearbyOffer.id === listItemId));
-  };
-
   const isSingleOfferLoading = useAppSelector(getSingleOfferLoadingStatus);
   const areNearbyOffersLoading = useAppSelector(getNearbyOffersLoadingStatus);
   const areCommentsLoading = useAppSelector(getCommentsLoadingStatus);
@@ -186,7 +178,7 @@ function Room(): JSX.Element {
                 <Map
                   city={offer.city}
                   offers={[...nearbyOffers, offer]}
-                  selectedPoint={selectedPoint}
+                  selectedPoint={offer}
                 />
               )}
             </section>
@@ -200,7 +192,6 @@ function Room(): JSX.Element {
                 (
                   <NearbyPlacesList
                     nearbyOffers={nearbyOffers}
-                    onListItemHover={onListItemHover}
                   />
                 )}
             </section>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Approute, AuthorizationStatus } from '../../constants/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import Logo from '../logo/Logo';
+import Logo from '../logo/logo';
 import { logoutAction } from '../../store/asyncActions';
 import { getAuthorizationStatus, getUser } from '../../store/user/selectors';
 

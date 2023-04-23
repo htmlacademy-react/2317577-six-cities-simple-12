@@ -2,8 +2,8 @@ import userEvent from '@testing-library/user-event';
 import { render, screen, act } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-router/History-Router';
-import Logo from './Logo';
+import HistoryRouter from '../history-router/history-router';
+import Logo from './logo';
 
 describe('Logo component', () => {
   const history = createMemoryHistory();

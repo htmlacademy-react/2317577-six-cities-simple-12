@@ -1,18 +1,16 @@
 import { Offers } from '../../types/offers';
-import NearbyPlaceCard from '../nearby-place-card/NearbyPlaceCard';
+import NearbyPlaceCard from '../nearby-place-card/nearby-place-card';
 
 type NearbyPlacesListProps = {
   nearbyOffers: Offers;
-  onListItemHover: (listItemName: number | undefined) => void;
 };
 
-function NearbyPlacesList ({ nearbyOffers, onListItemHover }: NearbyPlacesListProps) {
+function NearbyPlacesList ({ nearbyOffers }: NearbyPlacesListProps) {
   return (
     <div className="near-places__list places__list" data-testid='nearbyplaces-list'>
       {nearbyOffers.map((nearbyOffer) => (
         <NearbyPlaceCard
           nearbyOffer={nearbyOffer}
-          onListItemHover={onListItemHover}
           key={nearbyOffer.id}
         />
       ))}

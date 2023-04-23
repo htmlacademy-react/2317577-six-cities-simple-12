@@ -2,8 +2,8 @@ import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import { mockStore } from '../../utils/mockStore';
 import { createMemoryHistory } from 'history';
-import Room from './Room';
-import HistoryRouter from '../../components/history-router/History-Router';
+import Room from './room';
+import HistoryRouter from '../../components/history-router/history-router';
 import { AuthorizationStatus } from '../../constants/const';
 import { makeMockOffer } from '../../utils/mocks';
 

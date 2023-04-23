@@ -20,6 +20,7 @@ export type OffersData = {
 export type CommentsData = {
   comments: Comments;
   areCommentsLoading: boolean;
+  isCommentBeingPosted: boolean;
 }
 
 export type CurrentCityData = {

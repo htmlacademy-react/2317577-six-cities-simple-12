@@ -1,14 +1,14 @@
-import { fireEvent, render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import HistoryRouter from '../history-router/History-Router';
+import HistoryRouter from '../history-router/history-router';
 import { createMemoryHistory } from 'history';
 import { makeMockOffer } from '../../utils/mocks';
 import { mockStore } from '../../utils/mockStore';
-import NearbyPlaceCard from './NearbyPlaceCard';
+import NearbyPlaceCard from './nearby-place-card';
+import { Approute } from '../../constants/const';
 
 describe('NearbyPlaceCard component', () => {
-  const listItemHoverFn = jest.fn();
   const mockOffer = makeMockOffer();
 
   const history = createMemoryHistory();
@@ -17,7 +17,6 @@ describe('NearbyPlaceCard component', () => {
     <HistoryRouter history={history}>
       <NearbyPlaceCard
         nearbyOffer={mockOffer}
-        onListItemHover={listItemHoverFn}
       />
     </HistoryRouter>
   );
@@ -35,31 +34,13 @@ describe('NearbyPlaceCard component', () => {
     );
   });
 
-  it('when component is hovered, onListItemHover is called with the offer id', () => {
-    render(NearbyPlaceCardWithHistoryRouter);
-
-    fireEvent.mouseEnter(screen.getByTestId('nearbyplace-container'));
-
-    expect(listItemHoverFn).toBeCalled();
-    expect(listItemHoverFn).nthCalledWith(1, mockOffer.id);
-  });
-
-  it('when component is unhovered, onListItemHover is called with undefined', () => {
-    render(NearbyPlaceCardWithHistoryRouter);
-
-    fireEvent.mouseLeave(screen.getByTestId('nearbyplace-container'));
-
-    expect(listItemHoverFn).toBeCalled();
-    expect(listItemHoverFn).nthCalledWith(1, undefined);
-  });
-
   it('when title is clicked, redirect to this place', async () => {
     const store = mockStore();
 
     render (
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <NearbyPlaceCard nearbyOffer={mockOffer} onListItemHover={listItemHoverFn}/>
+          <NearbyPlaceCard nearbyOffer={mockOffer} />
         </HistoryRouter>
       </Provider>
     );
@@ -67,7 +48,7 @@ describe('NearbyPlaceCard component', () => {
     await act(async () => await userEvent.click(screen.getByText(mockOffer.title)));
 
     await waitFor(() => {
-      expect(history.location.pathname).toBe(`/offer/${mockOffer.id}`);
+      expect(history.location.pathname).toBe(`${Approute.Offer}/${mockOffer.id}`);
     });
   });
 });

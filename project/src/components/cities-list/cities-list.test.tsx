@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { makeFakeCity } from '../../utils/mocks';
 import { mockStore } from '../../utils/mockStore';
-import CitiesList from './CitiesList';
+import CitiesList from './cities-list';
 import { cities } from '../../constants/const';
 
 describe('CityList component', () => {

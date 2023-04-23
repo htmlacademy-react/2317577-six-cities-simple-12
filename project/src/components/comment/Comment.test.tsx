@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { makeMockComment } from '../../utils/mocks';
-import Comment from './Comment';
+import Comment from './comment';
 
 describe('Comment component', () => {
   it('should render correctly', () => {

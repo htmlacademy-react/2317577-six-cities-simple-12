@@ -1,4 +1,4 @@
-import Spinner from '../../components/spinner/Spinner';
+import Spinner from '../../components/spinner/spinner';
 
 function LoadingScreen() {
   return (

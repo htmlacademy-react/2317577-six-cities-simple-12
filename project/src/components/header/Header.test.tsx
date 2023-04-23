@@ -2,11 +2,11 @@ import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-router/History-Router';
+import HistoryRouter from '../history-router/history-router';
 import { mockStore } from '../../utils/mockStore';
 import { makeMockUser } from '../../utils/mocks';
 import { AuthorizationStatus } from '../../constants/const';
-import Header from './Header';
+import Header from './header';
 
 describe('Header component', () => {
   describe('authorization status is Auth', () => {

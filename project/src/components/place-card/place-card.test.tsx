@@ -3,12 +3,12 @@ import { render, screen, waitFor, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-router/History-Router';
+import HistoryRouter from '../history-router/history-router';
 import { makeMockOffer } from '../../utils/mocks';
 import { mockStore } from '../../utils/mockStore';
 import { AuthorizationStatus } from '../../constants/const';
-import PlaceCard from './PlaceCard';
-import Room from '../../pages/room/Room';
+import PlaceCard from './place-card';
+import Room from '../../pages/room/room';
 
 describe('PlaceCard component', () => {
   const listItemHoverFn = jest.fn();
