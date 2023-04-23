@@ -1,13 +1,15 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import RatingStar from './rating-star/RatingStar';
-import { useAppDispatch } from '../../hooks/redux';
+import RatingStar from './rating-star/rating-star';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { postCommentAction } from '../../store/asyncActions';
+import { getPostLoadingStatus } from '../../store/comments/selectors';
 
 type SendCommentProps = {
   hotelId: number;
 };
 
 function SendComment({ hotelId }: SendCommentProps) {
+  const isCommentBeingPosted = useAppSelector(getPostLoadingStatus);
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState({
@@ -16,7 +18,7 @@ function SendComment({ hotelId }: SendCommentProps) {
     date: new Date(),
   });
 
-  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(true);
 
   const handleInput = (
     evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,13 +64,14 @@ function SendComment({ hotelId }: SendCommentProps) {
       action="#"
       method="post"
       onSubmit={handleSubmit}
+      data-testid='send-comment-form'
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
         {[5, 4, 3, 2, 1].map((star) => (
-          <RatingStar value={star} onChange={handleInput} key={star} />
+          <RatingStar value={star} onChange={handleInput} key={star} rating={formData.rating} postLoadingStatus={isCommentBeingPosted} />
         ))}
       </div>
       <textarea
@@ -78,6 +81,8 @@ function SendComment({ hotelId }: SendCommentProps) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
         onChange={handleInput}
+        data-testid='review-id'
+        disabled={isCommentBeingPosted}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -90,6 +95,7 @@ function SendComment({ hotelId }: SendCommentProps) {
           className="reviews__submit form__submit button"
           type="submit"
           disabled={submitButtonDisabled}
+          data-testid='send-comment-button'
         >
           Submit
         </button>

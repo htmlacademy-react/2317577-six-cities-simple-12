@@ -1,4 +1,4 @@
-import CityItem from '../city-item/CityItem';
+import CityItem from '../city-item/city-item';
 import React from 'react';
 
 type CitiesListProps = {

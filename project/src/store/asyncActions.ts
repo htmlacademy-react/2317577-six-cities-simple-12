@@ -60,7 +60,7 @@ export const fetchCommentsAction = createAsyncThunk<
   }
 >('LOAD_COMMENTS', async (hotelId, { dispatch, extra: api }) => {
   const { data } = await api.get<Comments>(`${APIRoute.Comments}/${hotelId}`);
-  return data;
+  return data.slice(0, 10);
 });
 
 export const postCommentAction = createAsyncThunk<

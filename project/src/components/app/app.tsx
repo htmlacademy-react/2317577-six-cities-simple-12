@@ -2,12 +2,10 @@ import { Route, Routes } from 'react-router-dom';
 import { Approute } from '../../constants/const';
 import { useAppSelector } from '../../hooks/redux';
 import MainScreen from '../../pages/main-screen/main-screen';
-import Login from '../../pages/login/Login';
-import Room from '../../pages/room/Room';
+import Login from '../../pages/login/login';
+import Room from '../../pages/room/room';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import LoadingScreen from '../../pages/loading-screen/LoadingScreen';
-import HistoryRouter from '../history-router/History-Router';
-import browserHistory from '../../services/browser-history';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { getOffersLoadingStatus } from '../../store/offers/selectors';
 
 function App(): JSX.Element {
@@ -18,14 +16,12 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route path={Approute.Main} element={<MainScreen />} />
-        <Route path={Approute.Room} element={<Room />} />
-        <Route path={Approute.Login} element={<Login />} />
-        <Route path="*" element={<NotFoundScreen />} />
-      </Routes>
-    </HistoryRouter>
+    <Routes>
+      <Route path={Approute.Main} element={<MainScreen />} />
+      <Route path={Approute.Room} element={<Room />} />
+      <Route path={Approute.Login} element={<Login />} />
+      <Route path="*" element={<NotFoundScreen />} />
+    </Routes>
   );
 }
 

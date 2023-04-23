@@ -1,5 +1,5 @@
 import { Offers } from '../../types/offers';
-import PlaceCard from '../place-card/PlaceCard';
+import PlaceCard from '../place-card/place-card';
 
 type PlacesListProps = {
   offers: Offers;
@@ -8,7 +8,7 @@ type PlacesListProps = {
 
 function PlacesList({ offers, onListItemHover }: PlacesListProps) {
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className="cities__places-list places__list tabs__content" data-testid='places-list'>
       {offers.map((offer) => (
         <PlaceCard
           offer={offer}

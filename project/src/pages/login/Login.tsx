@@ -1,18 +1,23 @@
 import { Link } from 'react-router-dom';
-import { Approute } from '../../constants/const';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { Approute, AuthorizationStatus } from '../../constants/const';
+import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { AuthInfo } from '../../types/authInfo';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { loginAction } from '../../store/asyncActions';
-import Logo from '../../components/logo/Logo';
+import Logo from '../../components/logo/logo';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import {Navigate } from 'react-router-dom';
 
 function Login() {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [formData, setFormData] = useState<AuthInfo>({
     email: '',
     password: '',
   });
+
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -28,9 +33,26 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    if (
+      formData.email &&
+      formData.email.match(/^\S+@\S+\.\S+$/) &&
+      formData.password &&
+      formData.password.match(/[A-Za-z]+[0-9]+|[0-9]+[A-Za-z]+/)
+    ) {
+      setSubmitButtonDisabled(false);
+    } else {
+      setSubmitButtonDisabled(true);
+    }
+  }, [formData]);
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={Approute.Main} />;
+  }
+
   return (
     <div className="page page--gray page--login">
-      <div style={{ display: 'none'}}>
+      <div style={{ display: 'none' }}>
         <svg xmlns="http://www.w3.org/2000/svg">
           <symbol id="icon-arrow-select" viewBox="0 0 7 4">
             <path
@@ -68,9 +90,11 @@ function Login() {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" onSubmit={handleSubmit}>
+            <form className="login__form form" onSubmit={handleSubmit} data-testid='signin-form'>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
+                <label className="visually-hidden" htmlFor="emailId">
+                  E-mail
+                </label>
                 <input
                   className="login__input form__input"
                   type="email"
@@ -78,11 +102,15 @@ function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
+                  id="emailId"
+                  data-testid="email"
                   required
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
+                <label className="visually-hidden" htmlFor="passwordId">
+                  Password
+                </label>
                 <input
                   className="login__input form__input"
                   type="password"
@@ -90,12 +118,16 @@ function Login() {
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleChange}
+                  id="passwordId"
+                  data-testid="password"
                   required
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={submitButtonDisabled}
+                data-testid='signin-button'
               >
                 Sign in
               </button>
