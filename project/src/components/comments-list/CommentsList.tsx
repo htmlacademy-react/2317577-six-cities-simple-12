@@ -9,7 +9,7 @@ type CommentsListProps = {
 function CommentsList({comments}: CommentsListProps) {
   return (
     <ul className="reviews__list">
-      {comments.map((comment) => (
+      {comments.slice(0, 10).map((comment) => (
         <Comment {...comment} key={comment.id} />
       ))}
     </ul>

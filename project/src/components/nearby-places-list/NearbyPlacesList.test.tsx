@@ -6,7 +6,6 @@ import NearbyPlacesList from './NearbyPlacesList';
 
 describe('NearbyPlacesList component', () => {
   const mockOffers = makeMockOffers();
-  const listItemHoverFn = jest.fn();
   const history = createMemoryHistory();
 
   it('should render offers in list items that receive from props', () => {
@@ -14,7 +13,6 @@ describe('NearbyPlacesList component', () => {
       <HistoryRouter history={history}>
         <NearbyPlacesList
           nearbyOffers={mockOffers}
-          onListItemHover={listItemHoverFn}
         />
       </HistoryRouter>
     );

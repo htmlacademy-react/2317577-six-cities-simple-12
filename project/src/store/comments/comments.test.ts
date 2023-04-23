@@ -1,6 +1,6 @@
 import { Comments } from '../../types/comments';
 import { makeMockComments } from '../../utils/mocks';
-import { fetchCommentsAction } from '../asyncActions';
+import { fetchCommentsAction, postCommentAction } from '../asyncActions';
 import { commentsData } from './comments';
 
 const mockComments: Comments = makeMockComments();
@@ -11,6 +11,7 @@ describe('Reducer: commentsData', () => {
       {
         comments: [],
         areCommentsLoading: false,
+        isCommentBeingPosted: false,
       }
     );
   });
@@ -19,12 +20,14 @@ describe('Reducer: commentsData', () => {
     const state = {
       comments: [],
       areCommentsLoading: false,
+      isCommentBeingPosted: false,
     };
     expect(
       commentsData.reducer(state, { type: fetchCommentsAction.pending.type })
     ).toEqual({
       comments: [],
       areCommentsLoading: true,
+      isCommentBeingPosted: false,
     });
   });
 
@@ -32,6 +35,7 @@ describe('Reducer: commentsData', () => {
     const state = {
       comments: [],
       areCommentsLoading: false,
+      isCommentBeingPosted: false,
     };
     expect(
       commentsData.reducer(state, {
@@ -41,6 +45,40 @@ describe('Reducer: commentsData', () => {
     ).toEqual({
       comments: mockComments,
       areCommentsLoading: false,
+      isCommentBeingPosted: false,
+    });
+  });
+
+  it('Should make \'isCommentBeingPosted\' true', () => {
+    const state = {
+      comments: [],
+      areCommentsLoading: false,
+      isCommentBeingPosted: false,
+    };
+    expect(
+      commentsData.reducer(state, { type: postCommentAction.pending.type })
+    ).toEqual({
+      comments: [],
+      areCommentsLoading: false,
+      isCommentBeingPosted: true,
+    });
+  });
+
+  it('Should update offers after posting an offer. And \'isCommentBeingPosted\' = false', () => {
+    const state = {
+      comments: [],
+      areCommentsLoading: false,
+      isCommentBeingPosted: true,
+    };
+    expect(
+      commentsData.reducer(state, {
+        type: postCommentAction.fulfilled.type,
+        payload: mockComments,
+      })
+    ).toEqual({
+      comments: mockComments,
+      areCommentsLoading: false,
+      isCommentBeingPosted: false,
     });
   });
 });

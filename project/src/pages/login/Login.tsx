@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
-import { Approute } from '../../constants/const';
+import { Approute, AuthorizationStatus } from '../../constants/const';
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { AuthInfo } from '../../types/authInfo';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { loginAction } from '../../store/asyncActions';
 import Logo from '../../components/logo/Logo';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import {Navigate } from 'react-router-dom';
 
 function Login() {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [formData, setFormData] = useState<AuthInfo>({
     email: '',
@@ -42,6 +45,10 @@ function Login() {
       setSubmitButtonDisabled(true);
     }
   }, [formData]);
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={Approute.Main} />;
+  }
 
   return (
     <div className="page page--gray page--login">

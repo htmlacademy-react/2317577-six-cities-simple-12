@@ -8,7 +8,13 @@ import { mockStore } from '../../utils/mockStore';
 import SendComment from './SendComment';
 
 describe('SendComment component', () => {
-  const store = mockStore();
+  const store = mockStore({
+    COMMENTS: {
+      comments: [],
+      isCommentBeingPosted: false,
+      areCommentsLoading: false
+    }
+  });
   const history = createMemoryHistory();
 
   const SendCommentComponentWithProvider = (

@@ -1647,6 +1647,10 @@ img {
   fill: #ff9000
 }
 
+.form__rating-input_disabled {
+  pointer-events: none;
+}
+
 .form__star-image {
   fill: #c7c7c7;
   -webkit-transition: fill .3s;
